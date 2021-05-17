@@ -19,5 +19,9 @@ router.get('/', function(req, res) {
     const title = "Test";
     res.render('test/test', { title });
 });
+router.get('/hello', function(req, res) {
+    const title = "Hello";
+    res.render('test/hello', { title });
+});
 
 module.exports = router
