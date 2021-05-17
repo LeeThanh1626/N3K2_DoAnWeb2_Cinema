@@ -2,12 +2,19 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./models/db');
+// const Middlewares = require('./middlewares/auth');
 var cookieSession = require('cookie-session');
+
+const adminRouter = require('./routers/admin');
+const userRouter = require('./routers/user');
+const authRouter = require('./routers/auth');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
 app.use(express.static('public'));
+
+// app.use(Middlewares);
 
 //Session
 app.use(cookieSession({
@@ -22,11 +29,12 @@ app.use(cookieSession({
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-// app.use('/auth', authRouter);
-
-app.get('/', function(req, res) {
-    res.render('layout', { title: 'Trang chủ' });
-})
+//Xử lý chức năng đăng nhập của cả admin và user
+app.use('/auth', authRouter);
+//Xử lý chức năng của admin
+app.use('/admin', adminRouter);
+//Xử lý chức năng của user
+app.use('/', userRouter);
 
 db.sync().then(function() {
     const port = process.env.PORT || 3000;
