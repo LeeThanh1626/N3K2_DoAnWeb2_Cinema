@@ -33,7 +33,17 @@ const Showtime = db.define('Showtime', {
 });
 
 //code function here
+Showtime.addShowtime = async function(idCinema, idMovie, start, finish, money) {
 
+}
+
+Showtime.deleteShowtime = async function(id) {
+
+}
+
+Showtime.updateShowtime = async function(id, idCinema, idMovie, start, finish, money) {
+
+}
 
 
 
