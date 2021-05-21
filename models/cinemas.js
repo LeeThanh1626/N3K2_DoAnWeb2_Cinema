@@ -19,6 +19,19 @@ const Cinemas = db.define('Cinemas', {
 
 //code function here
 
+//thêm rạp
+Cinemas.addCinemas = async function(name, address) {
+
+}
+
+//xóa rạp
+Cinemas.deleteCinemas = async function(id) {
+
+}
+
+Cinemas.updateCinemas = async function(id, name, address) {
+
+}
 
 
 

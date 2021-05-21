@@ -29,6 +29,21 @@ const Cinema = db.define('Cinema', {
 
 //code function here
 
+//thêm rạp
+Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize) {
+
+}
+
+//xóa rạp
+Cinema.deleteCinema = async function(id) {
+
+}
+
+//cập nhật thông tin rạp
+Cinema.updateCinema = async function(id, name, idCinemas, horizontalSize, verticalSize) {
+
+}
+
 
 
 module.exports = Cinema;

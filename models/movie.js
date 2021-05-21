@@ -28,7 +28,17 @@ const Movie = db.define('Movie', {
 });
 
 //code function here
+Movie.addMovie = async function(name, openingDay, poster, time) {
 
+}
+
+Movie.deleteMovie = async function(id) {
+
+}
+
+Movie.updateMovie = async function(id, name, openingDay, poster, time) {
+
+}
 
 
 
