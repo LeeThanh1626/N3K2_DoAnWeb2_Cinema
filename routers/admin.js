@@ -97,7 +97,7 @@ router.get('/statistics', asyncHandler(async function(req, res) {
     res.render('');
 }))
 
-//Chức năng QL03: thống kê doanh thu theo cụm rạp và theo phim
+//Chức năng QL03 và QL04: thống kê doanh thu theo cụm rạp và theo phim
 router.post('/statistics', asyncHandler(async function(req, res) {
     const action = req.query.action;
     //from ... to ... : bắt đầu từ .... đến ...
@@ -132,9 +132,9 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                 })
                             } else { //Nếu không tồn tại
                                 const temp = { //Tạo đối tượng mới 
-                                    name: tempMovie.name,
-                                    ticket: 1,
-                                    money: tempBooking.money,
+                                    name: tempMovie.name, //Lưu tên phim
+                                    ticket: 1, //Lưu số vé
+                                    money: tempBooking.money, //Lưu tổng doanh thu
                                 }
                                 listStatistic.push(temp); //Thêm vào mảng
                             }
@@ -158,9 +158,9 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                         })
                                     } else { //Nếu không tồn tại
                                         const temp = { //Tạo đối tượng mới 
-                                            name: tempCinemas.name,
-                                            ticket: 1,
-                                            money: tempBooking.money,
+                                            name: tempCinemas.name, //Lưu tên cụm rạp
+                                            ticket: 1, //Lưu số vé
+                                            money: tempBooking.money, //Lưu tổng doanh thu
                                         }
                                         listStatistic.push(temp); //Thêm vào mảng
                                     }
