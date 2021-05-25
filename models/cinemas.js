@@ -19,19 +19,25 @@ const Cinemas = db.define('Cinemas', {
 
 //code function here
 
-//thêm rạp
+//thêm cụm rạp
 Cinemas.addCinemas = async function(name, address) {
-
+    await Cinemas.create({
+        name: name,
+        address: address,
+    })
 }
 
-//xóa rạp
+//xóa cụm rạp
 Cinemas.deleteCinemas = async function(id) {
-
+    const temp = await Cinemas.findByPk(id);
+    await temp.destroy();
 }
 
-Cinemas.updateCinemas = async function(id, name, address) {
+//cập nhật cụm rạp
+//không yêu cầu
+// Cinemas.updateCinemas = async function(id, name, address) {
 
-}
+// }
 
 
 

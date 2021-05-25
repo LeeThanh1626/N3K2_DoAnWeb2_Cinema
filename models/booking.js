@@ -34,4 +34,5 @@ const Booking = db.define('Booking', {
 
 
 
+
 module.exports = Booking;
