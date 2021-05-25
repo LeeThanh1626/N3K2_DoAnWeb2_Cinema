@@ -31,18 +31,25 @@ const Cinema = db.define('Cinema', {
 
 //thêm rạp
 Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize) {
-
+    await Cinema.create({
+        name: name,
+        idCinemas: idCinemas,
+        horizontalSize: horizontalSize,
+        verticalSize: verticalSize,
+    })
 }
 
 //xóa rạp
 Cinema.deleteCinema = async function(id) {
-
+    const temp = await Cinema.findByPk(id);
+    await temp.destroy();
 }
 
 //cập nhật thông tin rạp
-Cinema.updateCinema = async function(id, name, idCinemas, horizontalSize, verticalSize) {
+//không yêu cầu
+// Cinema.updateCinema = async function(id, name, idCinemas, horizontalSize, verticalSize) {
 
-}
+// }
 
 
 

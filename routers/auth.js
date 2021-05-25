@@ -10,7 +10,9 @@ const router = express.Router();
 //code get, post here
 //Login, register, logout for admin and user
 router.get('/login', function(req, res) {
+    //xử lý
 
+    res.render('/auth/login')
 });
 
 module.exports = router;

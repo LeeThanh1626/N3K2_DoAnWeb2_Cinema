@@ -25,7 +25,9 @@ router.get('/hello', function(req, res) {
 });
 router.get('/helloson', function(req, res) {
     const title = "Hello";
-    res.render('test/helloSon', { title });
+    const name = req.query.name;
+
+    res.render('test/helloSon', { title, name });
 });
 
 module.exports = router
