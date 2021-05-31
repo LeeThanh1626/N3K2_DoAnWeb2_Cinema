@@ -37,18 +37,18 @@ const User = db.define('User', {
     }
 });
 
-//code function here
-// User.findByEmail = async function(email) {
-//     return User.findOne({
-//         where: {
-//             email,
-//         }
-//     });
-// }
+// code function here
+User.findByEmail = async function(email) {
+    return User.findOne({
+        where: {
+            email,
+        }
+    });
+}
 
-// User.findById = async function(id) {
-//     return User.findByPk(id);
-// }
+User.findById = async function(id) {
+    return User.findByPk(id);
+}
 
 // User.Register = async function(displayName, email, password) {
 //     const bcrypt = require('bcrypt');
