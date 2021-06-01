@@ -12,7 +12,7 @@ const Movie = db.define('Movie', {
     },
     //ngày công chiếu
     openingDay: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     //poster phim
