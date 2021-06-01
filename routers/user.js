@@ -35,7 +35,7 @@ router.get('/helloson', function(req, res) {
 
 //Chức năng ND06: xem lại danh sách đặt vé trong lịch sử
 //Chưa hoàn thành -- Còn đường dẫn đến views
-router.get('', asyncHandler(async function(req, res) {
+router.get('/his', asyncHandler(async function(req, res) {
     //Lưu vào session biến UserID để dùng
     const UserID = "session_UserID";
 

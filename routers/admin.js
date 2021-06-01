@@ -60,8 +60,9 @@ router.post('/manageCinema', asyncHandler(async function(req, res) {
 router.get('/manageMovie', asyncHandler(async function(req, res) {
     const listMovie = await Movie.findAll();
     const listShowtime = await Showtime.findAll();
+    const title = "Quản lý phim"
 
-    res.render('', { listMovie, listShowtime });
+    res.render('auth/manageMovie', { title, listMovie, listShowtime });
 }))
 
 router.post('/mangageMovie', asyncHandler(async function(req, res) {
