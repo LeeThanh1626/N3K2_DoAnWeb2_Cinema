@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 const db = require('./db');
 
 //Tạo bảng rạp phim (Cinema)
-const Cinema = db.define('Cinema', {
+const Cinema = db.define('Theater', {
     //tên cụm rạp
     name: {
         type: DataTypes.STRING,
