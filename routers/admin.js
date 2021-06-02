@@ -119,6 +119,7 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                 //Kiểm tra đặt chỗ của xuất chiếu nào
                 if (tempBooking.idShowTime === tempShowtime.id) {
                     //Phim
+
                     if (action === "Movie") { //Doanh thu theo phim
                         listMovie.forEach(tempMovie => {
                             //Kiểm tra xuất chiếu của phim nào
@@ -141,6 +142,7 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                     listStatistic.push(temp); //Thêm vào mảng
                                 }
                             }
+
                         });
                         res.render('', { listStatistic })
                     } else { //Doanh thu của cụm rạp
