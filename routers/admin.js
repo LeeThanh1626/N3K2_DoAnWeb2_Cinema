@@ -119,66 +119,65 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                 //Kiểm tra đặt chỗ của xuất chiếu nào
                 if (tempBooking.idShowTime === tempShowtime.id) {
                     //Phim
-                    listMovie.forEach(tempMovie => {
-                        //Kiểm tra xuất chiếu của phim nào
-                        if (tempShowtime.idMovie === tempMovie.id) {
-                            //Kiểm tra phim đã có trong mảng chưa
-                            const exits = listStatistic.find(u => u.name === tempMovie.name);
-                            if (exits) { //Nếu có tồn tại 
-                                listStatistic.forEach(u => {
-                                    if (u.name === tempMovie.name) { //Cập nhật lại số vé và doanh thu
-                                        u.ticket = u.ticket + 1;
-                                        u.money = u.money + tempBooking.totalMoney;
+                    if (action === "Movie") { //Doanh thu theo phim
+                        listMovie.forEach(tempMovie => {
+                            //Kiểm tra xuất chiếu của phim nào
+                            if (tempShowtime.idMovie === tempMovie.id) {
+                                //Kiểm tra phim đã có trong mảng chưa
+                                const exits = listStatistic.find(u => u.name === tempMovie.name);
+                                if (exits) { //Nếu có tồn tại 
+                                    listStatistic.forEach(u => {
+                                        if (u.name === tempMovie.name) { //Cập nhật lại số vé và doanh thu
+                                            u.ticket = u.ticket + 1;
+                                            u.money = u.money + tempBooking.totalMoney;
+                                        }
+                                    })
+                                } else { //Nếu không tồn tại
+                                    const temp = { //Tạo đối tượng mới 
+                                        name: tempMovie.name, //Lưu tên phim
+                                        ticket: 1, //Lưu số vé
+                                        money: tempBooking.totalMoney, //Lưu tổng doanh thu
+                                    }
+                                    listStatistic.push(temp); //Thêm vào mảng
+                                }
+                            }
+                        });
+                        res.render('', { listStatistic })
+                    } else { //Doanh thu của cụm rạp
+                        //Cụm rạp
+                        listCinemas.forEach(tempCinema => {
+                            //Kiểm tra xuất chiếu của rạp nào
+                            if (tempShowtime.idCinema === tempCinema.id) {
+                                listCinemas.forEach(tempCinemas => {
+                                    //Kiểm tra rạp của cụm rạp nào
+                                    if (tempCinema.idCinemas === tempCinemas.id) {
+                                        //Kiểm tra cum rạp đã có trong mảng chưa
+                                        const exits = listStatistic.find(u => u.name === tempCinemas.name);
+                                        if (exits) { //Nếu có tồn tại 
+                                            listStatistic.forEach(u => {
+                                                if (u.name === tempCinemas.name) { //Cập nhật lại số vé và doanh thu
+                                                    u.ticket = u.ticket + 1;
+                                                    u.money = u.money + tempBooking.totalMoney;
+                                                }
+                                            })
+                                        } else { //Nếu không tồn tại
+                                            const temp = { //Tạo đối tượng mới 
+                                                name: tempCinemas.name, //Lưu tên cụm rạp
+                                                ticket: 1, //Lưu số vé
+                                                money: tempBooking.totalMoney, //Lưu tổng doanh thu
+                                            }
+                                            listStatistic.push(temp); //Thêm vào mảng
+                                        }
                                     }
                                 })
-                            } else { //Nếu không tồn tại
-                                const temp = { //Tạo đối tượng mới 
-                                    name: tempMovie.name, //Lưu tên phim
-                                    ticket: 1, //Lưu số vé
-                                    money: tempBooking.totalMoney, //Lưu tổng doanh thu
-                                }
-                                listStatistic.push(temp); //Thêm vào mảng
                             }
-                        }
-                    });
-                    //Cụm rạp
-                    listCinemas.forEach(tempCinema => {
-                        //Kiểm tra xuất chiếu của rạp nào
-                        if (tempShowtime.idCinema === tempCinema.id) {
-                            listCinemas.forEach(tempCinemas => {
-                                //Kiểm tra rạp của cụm rạp nào
-                                if (tempCinema.idCinemas === tempCinemas.id) {
-                                    //Kiểm tra cum rạp đã có trong mảng chưa
-                                    const exits = listStatistic.find(u => u.name === tempCinemas.name);
-                                    if (exits) { //Nếu có tồn tại 
-                                        listStatistic.forEach(u => {
-                                            if (u.name === tempCinemas.name) { //Cập nhật lại số vé và doanh thu
-                                                u.ticket = u.ticket + 1;
-                                                u.money = u.money + tempBooking.totalMoney;
-                                            }
-                                        })
-                                    } else { //Nếu không tồn tại
-                                        const temp = { //Tạo đối tượng mới 
-                                            name: tempCinemas.name, //Lưu tên cụm rạp
-                                            ticket: 1, //Lưu số vé
-                                            money: tempBooking.totalMoney, //Lưu tổng doanh thu
-                                        }
-                                        listStatistic.push(temp); //Thêm vào mảng
-                                    }
-                                }
-                            })
-                        }
-                    });
+                        });
+                        res.render('', { listStatistic });
+                    }
                 }
             })
         }
     })
-
-    if (action === "Cinemas") { //Doanh thu của cụm rạp
-        res.render('', { listStatistic })
-    } else { //Doanh thu theo phim
-        res.render('', { listStatistic });
-    }
 }))
 
 module.exports = router

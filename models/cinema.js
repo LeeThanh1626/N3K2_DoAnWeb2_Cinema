@@ -17,12 +17,12 @@ const Cinema = db.define('Theater', {
     },
     //kích thước chiều ngang
     horizontalSize: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     //kích thước chiều dọc
     verticalSize: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
 });
