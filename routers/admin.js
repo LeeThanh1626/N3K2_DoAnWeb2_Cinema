@@ -11,12 +11,8 @@ const Showtime = require('../models/showtime');
 const Ticket = require('../models/ticket');
 
 const router = express.Router();
-
-//Code get, post here
-router.get('/', function(req, res) {
-
-});
-
+//Chức năng QL01
+//Dùng chung với user
 
 //Chức năng QL02
 //Hiển thị trang quản lý rạp và cụm rạp
@@ -94,13 +90,13 @@ router.post('/mangageMovie', asyncHandler(async function(req, res) {
 
 //Màn hình chủ chức năng QL03 và QL04
 //Chưa hoàn thành -- Còn đường dẫn đến views
-router.get('/statistics', asyncHandler(async function(req, res) {
-    res.render('');
-}))
+// router.get('/statistics', asyncHandler(async function(req, res) {
+//     res.render('');
+// }))
 
 //Chức năng QL03 và QL04: thống kê doanh thu theo cụm rạp và theo phim
-router.post('/statistics', asyncHandler(async function(req, res) {
-    const action = req.query.action;
+router.get('/statistics', asyncHandler(async function(req, res) {
+    // const action = req.query.action;
     //from ... to ... : bắt đầu từ .... đến ...
     const { from, to } = req.body;
 
@@ -114,71 +110,91 @@ router.post('/statistics', asyncHandler(async function(req, res) {
     //Xử lý doanh thu phim
     listBooking.forEach(tempBooking => {
         //Kiểm tra ngày đặt chỗ có trong khoảng thời gian from ... to không
-        if (tempBooking.createdAt >= from && tempBooking.createdAt <= to) {
-            listShowtime.forEach(tempShowtime => {
+        //if (tempBooking.createdAt >= from && tempBooking.createdAt <= to) {
+        listShowtime.forEach(tempShowtime => {
                 //Kiểm tra đặt chỗ của xuất chiếu nào
                 if (tempBooking.idShowTime === tempShowtime.id) {
                     //Phim
-                    listMovie.forEach(tempMovie => {
-                        //Kiểm tra xuất chiếu của phim nào
-                        if (tempShowtime.idMovie === tempMovie.id) {
-                            //Kiểm tra phim đã có trong mảng chưa
-                            const exits = listStatistic.find(u => u.name === tempMovie.name);
-                            if (exits) { //Nếu có tồn tại 
-                                listStatistic.forEach(u => {
-                                    if (u.name === tempMovie.name) { //Cập nhật lại số vé và doanh thu
-                                        u.ticket = u.ticket + 1;
-                                        u.money = u.money + tempBooking.money;
+                    if (action === "Moive") { //Doanh thu theo phim
+                        listMovie.forEach(tempMovie => {
+                            //Kiểm tra xuất chiếu của phim nào
+                            if (tempShowtime.idMovie === tempMovie.id) {
+                                //Kiểm tra phim đã có trong mảng chưa
+                                const exits = listStatistic.find(u => u.name === tempMovie.name);
+                                if (exits) { //Nếu có tồn tại 
+                                    listStatistic.forEach(u => {
+                                        if (u.name === tempMovie.name) { //Cập nhật lại số vé và doanh thu
+                                            u.ticket = u.ticket + 1;
+                                            u.money = u.money + tempBooking.totalMoney;
+                                        }
+                                    })
+                                } else { //Nếu không tồn tại
+                                    const temp = { //Tạo đối tượng mới 
+                                        name: tempMovie.name, //Lưu tên phim
+                                        ticket: 1, //Lưu số vé
+                                        money: tempBooking.totalMoney, //Lưu tổng doanh thu
+                                    }
+                                    listStatistic.push(temp); //Thêm vào mảng
+                                }
+                            }
+                        });
+                        res.render('t', { listStatistic })
+                    } else { //Doanh thu theo cụm rạp
+                        //Cụm rạp
+                        listCinemas.forEach(tempCinema => {
+                            //Kiểm tra xuất chiếu của rạp nào
+                            if (tempShowtime.idCinema === tempCinema.id) {
+                                listCinemas.forEach(tempCinemas => {
+                                    //Kiểm tra rạp của cụm rạp nào
+                                    if (tempCinema.idCinemas === tempCinemas.id) {
+                                        //Kiểm tra cum rạp đã có trong mảng chưa
+                                        const exits = listStatistic.find(u => u.name === tempCinemas.name);
+                                        if (exits) { //Nếu có tồn tại 
+                                            listStatistic.forEach(u => {
+                                                if (u.name === tempCinemas.name) { //Cập nhật lại số vé và doanh thu
+                                                    u.ticket = u.ticket + 1;
+                                                    u.money = u.money + tempBooking.totalMoney;
+                                                }
+                                            })
+                                        } else { //Nếu không tồn tại
+                                            const temp = { //Tạo đối tượng mới 
+                                                name: tempCinemas.name, //Lưu tên cụm rạp
+                                                ticket: 1, //Lưu số vé
+                                                money: tempBooking.totalMoney, //Lưu tổng doanh thu
+                                            }
+                                            listStatistic.push(temp); //Thêm vào mảng
+                                        }
                                     }
                                 })
-                            } else { //Nếu không tồn tại
-                                const temp = { //Tạo đối tượng mới 
-                                    name: tempMovie.name, //Lưu tên phim
-                                    ticket: 1, //Lưu số vé
-                                    money: tempBooking.money, //Lưu tổng doanh thu
-                                }
-                                listStatistic.push(temp); //Thêm vào mảng
                             }
-                        }
-                    });
-                    //Cụm rạp
-                    listCinemas.forEach(tempCinema => {
-                        //Kiểm tra xuất chiếu của rạp nào
-                        if (tempShowtime.idCinema === tempCinema.id) {
-                            listCinemas.forEach(tempCinemas => {
-                                //Kiểm tra rạp của cụm rạp nào
-                                if (tempCinema.idCinemas === tempCinemas.id) {
-                                    //Kiểm tra cum rạp đã có trong mảng chưa
-                                    const exits = listStatistic.find(u => u.name === tempCinemas.name);
-                                    if (exits) { //Nếu có tồn tại 
-                                        listStatistic.forEach(u => {
-                                            if (u.name === tempCinemas.name) { //Cập nhật lại số vé và doanh thu
-                                                u.ticket = u.ticket + 1;
-                                                u.money = u.money + tempBooking.money;
-                                            }
-                                        })
-                                    } else { //Nếu không tồn tại
-                                        const temp = { //Tạo đối tượng mới 
-                                            name: tempCinemas.name, //Lưu tên cụm rạp
-                                            ticket: 1, //Lưu số vé
-                                            money: tempBooking.money, //Lưu tổng doanh thu
-                                        }
-                                        listStatistic.push(temp); //Thêm vào mảng
-                                    }
-                                }
-                            })
-                        }
-                    });
+                        });
+                        res.render('', { listStatistic });
+                    }
                 }
             })
-        }
+            //}
     })
 
-    if (action === "Cinemas") { //Doanh thu của cụm rạp
-        res.render('', { listStatistic })
-    } else { //Doanh thu theo phim
-        res.render('', { listStatistic });
-    }
+    //Kiểm tra ngày (done)
+    // listBooking.forEach(u => {
+    //     // if ("2021-06-02" === CURRENT_DATE(u.createdAt))
+    //     console.log(u.createdAt);
+    //     var month = u.createdAt.getMonth() + 1;
+    //     var year = u.createdAt.getFullYear();
+    //     var day = u.createdAt.getDate();
+
+    //     const from = new Date("2021-06-02");
+
+    //     if (from.getDate() === u.createdAt.getDate() && from.getMonth() === u.createdAt.getMonth() &&
+    //         from.getFullYear() === u.createdAt.getFullYear()) {
+    //         console.log("1");
+    //     } else {
+    //         console.log("0");
+    //     }
+    // })
+
+    // const title = "Hello";
+    // res.render('test/hello', { title });
 }))
 
 module.exports = router

@@ -46,6 +46,7 @@ User.findByEmail = async function(email) {
     });
 }
 
+
 // User.findById = async function(id) {
 //     return User.findByPk(id);
 // }
