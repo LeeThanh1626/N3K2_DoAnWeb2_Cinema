@@ -128,14 +128,14 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                 listStatistic.forEach(u => {
                                     if (u.name === tempMovie.name) { //Cập nhật lại số vé và doanh thu
                                         u.ticket = u.ticket + 1;
-                                        u.money = u.money + tempBooking.money;
+                                        u.money = u.money + tempBooking.totalMoney;
                                     }
                                 })
                             } else { //Nếu không tồn tại
                                 const temp = { //Tạo đối tượng mới 
                                     name: tempMovie.name, //Lưu tên phim
                                     ticket: 1, //Lưu số vé
-                                    money: tempBooking.money, //Lưu tổng doanh thu
+                                    money: tempBooking.totalMoney, //Lưu tổng doanh thu
                                 }
                                 listStatistic.push(temp); //Thêm vào mảng
                             }
@@ -154,14 +154,14 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                         listStatistic.forEach(u => {
                                             if (u.name === tempCinemas.name) { //Cập nhật lại số vé và doanh thu
                                                 u.ticket = u.ticket + 1;
-                                                u.money = u.money + tempBooking.money;
+                                                u.money = u.money + tempBooking.totalMoney;
                                             }
                                         })
                                     } else { //Nếu không tồn tại
                                         const temp = { //Tạo đối tượng mới 
                                             name: tempCinemas.name, //Lưu tên cụm rạp
                                             ticket: 1, //Lưu số vé
-                                            money: tempBooking.money, //Lưu tổng doanh thu
+                                            money: tempBooking.totalMoney, //Lưu tổng doanh thu
                                         }
                                         listStatistic.push(temp); //Thêm vào mảng
                                     }
