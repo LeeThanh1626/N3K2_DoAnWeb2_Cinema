@@ -31,7 +31,34 @@ router.get('/helloson', function(req, res) {
     res.render('test/helloSon', { title, name });
 });
 
+//Chức năng ND05: đặt vé
+//Chưa hoàn thành -- Còn đường dẫn đến views
+router.get('/booking', asyncHandler(async function(req, res) {
+    //Truyền vào id rạp chiếu và id phim
+    //Load ngang dọc, showtime => truyền xuống view
+    res.render('');
+}))
 
+router.post('booking', asyncHandler(async function(req, res) {
+
+    const listSeat = ["A1", "A2"]; //get mảng mã ghế muốn đặt
+
+    const idUser = "abc"; //iduser trong session
+    const idShowTime = 1; //get
+    const totalMoney = 100000; //showtime.money*listSeat.length
+
+    //lưu row mới vào bảng booking
+    await Booking.addBooking(idUser, idShowTime, totalMoney);
+
+    //chạy listSeat lưu vào bảng Ticket
+    listSeat.forEach(u => {
+        const listBooking = await Booking.findAll();
+        const money = 50000; //showtime.money
+        await Ticket.addTicket(listBooking.length - 1, u, money);
+    })
+
+    res.redirect('/user/his?noti=bookingSuccess', { noti });
+}))
 
 //Chức năng ND06: xem lại danh sách đặt vé trong lịch sử
 //Chưa hoàn thành -- Còn đường dẫn đến views

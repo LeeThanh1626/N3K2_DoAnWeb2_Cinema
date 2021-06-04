@@ -1,6 +1,6 @@
 //Đặt chỗ
 
-const { DataTypes } = require('sequelize');
+const { DataTypes, NOW } = require('sequelize');
 const db = require('./db');
 
 //Tạo bảng đặt chỗ (Booking)
@@ -30,7 +30,14 @@ const Booking = db.define('Booking', {
 });
 
 //code function here
-
+Booking.addBooking = async function(idUser, idShowTime, totalMoney) {
+    await Booking.create({
+        idUser: idUser,
+        idShowTime: idShowTime,
+        datetime: NOW(),
+        totalMoney: totalMoney,
+    })
+}
 
 
 
