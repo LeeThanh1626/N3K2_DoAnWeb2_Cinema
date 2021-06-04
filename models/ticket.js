@@ -24,7 +24,13 @@ const Ticket = db.define('Ticket', {
 });
 
 //code function here
-
+Ticket.addTicket = async function(idBooking, idSeat, money) {
+    await Ticket.create({
+        idBooking: idBooking,
+        idSeat: idSeat,
+        money: money,
+    })
+}
 
 
 
