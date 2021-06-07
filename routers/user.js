@@ -31,6 +31,19 @@ router.get('/helloson', function(req, res) {
     res.render('test/helloSon', { title, name });
 });
 
+//Chức năng ND02: quản lý thông tin cá nhân
+//Chưa hoàn thành -- Còn đường dẫn đến Views
+router.get('/profile', asyncHandler(async function(req, res) {
+        const tempUser = await User.findByPk(req.session.idUser);
+        res.render('', { tempUser });
+    }))
+    //Update thông tin cá nhân
+router.post('/profile', asyncHandler(async function(req, res) {
+    const { email, displayName, phoneNumber } = req.body;
+    await User.updateUser(email, displayName, phoneNumber);
+    res.redirect('/profile');
+}))
+
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
 router.get('/booking', asyncHandler(async function(req, res) {
