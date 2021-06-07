@@ -93,5 +93,9 @@ User.findById = async function(id) {
 //     await user.save();
 // }
 
+User.updateUser = async function(email, displayName, phoneNumber) {
+
+}
+
 
 module.exports = User;
