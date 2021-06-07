@@ -29,7 +29,7 @@ router.get('/helloson', function(req, res) {
     const name = req.query.name;
 
     res.render('test/helloSon', { title, name });
-});
+})
 
 //Chức năng ND02: quản lý thông tin cá nhân
 //Chưa hoàn thành -- Còn đường dẫn đến Views
@@ -39,10 +39,33 @@ router.get('/profile', asyncHandler(async function(req, res) {
     }))
     //Update thông tin cá nhân
 router.post('/profile', asyncHandler(async function(req, res) {
-    const { email, displayName, phoneNumber } = req.body;
-    await User.updateUser(email, displayName, phoneNumber);
-    res.redirect('/profile');
+        const { email, displayName, phoneNumber } = req.body;
+        await User.updateUser(email, displayName, phoneNumber);
+        res.redirect('/user/profile');
+    }))
+    //Đổi password
+router.get('/changePass', asyncHandler(async function(req, res) {
+    res.render('');
 }))
+router.post('/changePass', asyncHandler(async function(req, res) {
+    const { oldPass, newPass, reNewPass } = req.body;
+    const found = await User.findByPk(req.session.userId);
+    if (found && bcrypt.compareSync(oldPass, found.password)) {
+        if (newPass === reNewPass) {
+            const bcrypt = require('bcrypt');
+            const hash = bcrypt.hashSync(newpassword, 10);
+            const pf = await User.findByPk(req.session.userId);
+            pf.password = hash;
+            await pf.save();
+            res.redirect('/user/profile?noti=changePassSuccess');
+        } else {
+            res.redirect('/user/profile?noti=changePassFail');
+        }
+    } else {
+        res.redirect('/user/profile?noti=changePassFail');
+    }
+}))
+
 
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
