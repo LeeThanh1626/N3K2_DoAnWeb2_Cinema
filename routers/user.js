@@ -34,19 +34,28 @@ router.get('/helloson', function(req, res) {
 //Chức năng ND02: quản lý thông tin cá nhân
 //Chưa hoàn thành -- Còn đường dẫn đến Views
 router.get('/profile', asyncHandler(async function(req, res) {
-        const tempUser = await User.findByPk(req.session.idUser);
-        res.render('', { tempUser });
-    }))
-    //Update thông tin cá nhân
+    const noti = req.query.noti;
+    const tempUser = await User.findByPk(req.session.idUser);
+    res.render('', { tempUser, noti });
+}))
+
+//Update thông tin cá nhân
 router.post('/profile', asyncHandler(async function(req, res) {
-        const { email, displayName, phoneNumber } = req.body;
-        await User.updateUser(email, displayName, phoneNumber);
-        res.redirect('/user/profile');
-    }))
-    //Đổi password
+    const { email, displayName, phoneNumber } = req.body;
+    const pf = await User.findByEmail(email);
+    pf.displayName = displayName;
+    pf.phoneNumber = phoneNumber;
+    await pf.save();
+    res.redirect('/auth/profile?noti=changeNameSuccess');
+}))
+
+//Đổi password -- get -- ND02
+//Chưa hoàn thành -- Còn đường dẫn đến Views
 router.get('/changePass', asyncHandler(async function(req, res) {
     res.render('');
 }))
+
+//Đổi password -- post -- ND02
 router.post('/changePass', asyncHandler(async function(req, res) {
     const { oldPass, newPass, reNewPass } = req.body;
     const found = await User.findByPk(req.session.userId);
