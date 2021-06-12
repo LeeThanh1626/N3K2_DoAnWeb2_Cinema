@@ -17,8 +17,8 @@ const router = express.Router();
 //Test http://localhost:3000/
 //Test
 router.get('/', function(req, res) {
-    const title = "Test";
-    res.render('test/test', { title });
+    const title = "Trang chủ";
+    res.render('user/homepage', { title });
 });
 router.get('/hello', function(req, res) {
     const title = "Hello";
@@ -29,52 +29,7 @@ router.get('/helloson', function(req, res) {
     const name = req.query.name;
 
     res.render('test/helloSon', { title, name });
-})
-
-//Chức năng ND02: quản lý thông tin cá nhân
-//Chưa hoàn thành -- Còn đường dẫn đến Views
-router.get('/profile', asyncHandler(async function(req, res) {
-    const noti = req.query.noti;
-    const tempUser = await User.findByPk(req.session.idUser);
-    res.render('', { tempUser, noti });
-}))
-
-//Update thông tin cá nhân
-router.post('/profile', asyncHandler(async function(req, res) {
-    const { email, displayName, phoneNumber } = req.body;
-    const pf = await User.findByEmail(email);
-    pf.displayName = displayName;
-    pf.phoneNumber = phoneNumber;
-    await pf.save();
-    res.redirect('/auth/profile?noti=changeNameSuccess');
-}))
-
-//Đổi password -- get -- ND02
-//Chưa hoàn thành -- Còn đường dẫn đến Views
-router.get('/changePass', asyncHandler(async function(req, res) {
-    res.render('');
-}))
-
-//Đổi password -- post -- ND02
-router.post('/changePass', asyncHandler(async function(req, res) {
-    const { oldPass, newPass, reNewPass } = req.body;
-    const found = await User.findByPk(req.session.userId);
-    if (found && bcrypt.compareSync(oldPass, found.password)) {
-        if (newPass === reNewPass) {
-            const bcrypt = require('bcrypt');
-            const hash = bcrypt.hashSync(newpassword, 10);
-            const pf = await User.findByPk(req.session.userId);
-            pf.password = hash;
-            await pf.save();
-            res.redirect('/user/profile?noti=changePassSuccess');
-        } else {
-            res.redirect('/user/profile?noti=changePassFail');
-        }
-    } else {
-        res.redirect('/user/profile?noti=changePassFail');
-    }
-}))
-
+});
 
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
@@ -87,20 +42,22 @@ router.get('/booking', asyncHandler(async function(req, res) {
 router.post('booking', asyncHandler(async function(req, res) {
 
     const listSeat = ["A1", "A2"]; //get mảng mã ghế muốn đặt
-
     const idUser = "abc"; //iduser trong session
     const idShowTime = 1; //get
     const totalMoney = 100000; //showtime.money*listSeat.length
 
     //lưu row mới vào bảng booking
     await Booking.addBooking(idUser, idShowTime, totalMoney);
-
+    const listBooking = await Booking.findAll();
     //chạy listSeat lưu vào bảng Ticket
-    listSeat.forEach(u => {
-        const listBooking = await Booking.findAll();
+    // listSeat.forEach(u => {
+    //     const money = 50000; //showtime.money
+    //     await Ticket.addTicket(listBooking.length - 1, u, money);
+    // })
+    for (const u of listSeat) {
         const money = 50000; //showtime.money
         await Ticket.addTicket(listBooking.length - 1, u, money);
-    })
+    }
 
     res.redirect('/user/his?noti=bookingSuccess', { noti });
 }))

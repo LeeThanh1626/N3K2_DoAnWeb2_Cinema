@@ -12,7 +12,13 @@ const router = express.Router();
 router.get('/login', function(req, res) {
     //xử lý
 
-    res.render('/auth/login')
+    res.render('user/login')
+});
+
+router.get('/signup', function(req, res) {
+    //xử lý
+
+    res.render('user/signup')
 });
 
 module.exports = router;

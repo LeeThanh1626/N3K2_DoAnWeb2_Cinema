@@ -1,6 +1,7 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
+const path = require('path');
 const db = require('./models/db');
 // const Middlewares = require('./middlewares/auth');
 var cookieSession = require('cookie-session');
@@ -28,6 +29,9 @@ app.use(cookieSession({
 //EJS
 app.set('views', './views');
 app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.use('/assets', express.static(__dirname + '/public'));
+app.use('/assets', express.static('assets'))
 
 //Xử lý chức năng đăng nhập của cả admin và user
 app.use('/auth', authRouter);
