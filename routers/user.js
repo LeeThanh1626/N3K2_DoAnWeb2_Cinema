@@ -9,6 +9,7 @@ const Cinemas = require('../models/cinemas');
 const Movie = require('../models/movie');
 const Showtime = require('../models/showtime');
 const Ticket = require('../models/ticket');
+const WishList = require('../models/wishlist');
 const { title } = require('process');
 
 const router = express.Router();
@@ -30,7 +31,8 @@ router.get('/helloson', function(req, res) {
 //Chức năng ND03: trang chủ
 router.get('/', asyncHandler(async function(req, res) {
     const listMovie = await Movie.findAll();
-    res.render('user/homepage', { listMovie });
+    const favourite = await WishList.findAll();
+    res.render('user/homepage', { listMovie, favourite });
 }))
 
 //Chức năng ND05: đặt vé

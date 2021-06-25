@@ -1,0 +1,3 @@
+id,email,password,displayName,phoneNumber,code,permission,createdAt,updatedAt
+1,tranthanhson299@gmail.com,$2b$10$fI2EMyNEICS7NHhI5WOhGOYu54p7Dzqex4SxVxt7m/o4EY84x6XGS,Thanh Sơn,0123456789,,1,2021-05-30 11:02:43.84973+07,2021-05-30 11:02:43.84973+07
+2,tranthanhson603@gmail.com,$2b$10$fI2EMyNEICS7NHhI5WOhGOYu54p7Dzqex4SxVxt7m/o4EY84x6XGS,Sơn Thanh,0987654321,,0,2021-05-30 11:02:43.84973+07,2021-05-30 11:02:43.84973+07
