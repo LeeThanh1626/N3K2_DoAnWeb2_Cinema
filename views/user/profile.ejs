@@ -1,0 +1,22 @@
+<form style="border:1px solid #ccc" method="POST">
+    <div class="container">
+        <h1>Thông tin cá nhân</h1>
+        <hr>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" value="<%= profileUser.email %>" name="email" required disabled>
+
+        <label for="password"><b>Mật Khẩu</b></label>
+        <input type="password" value="<%= profileUser.password %>" name="password" required disabled>
+
+        <label for="displayName"><b>Tên hiển thị</b></label>
+        <input type="text" value="<%= profileUser.displayName %>" name="displayName" required>
+
+        <label for="phoneNumber"><b>Số điện thoại</b></label>
+        <input type="text" value="<%= profileUser.phoneNumber %>" name="phoneNumber" required>
+
+        <div class="clearfix">
+            <button type="submit" class="signupbtn">Cập nhật</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="p-3 mb-2 bg-info text-dark">
+        <p class="text-center fs-4">SCREEN</p>
+    </div>
+    <form method="post">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <% for (var z = 1; z <= ngang; z++) { %>
+                        <th scope="col">
+                            <%= z; %>
+                        </th>
+                        <% }; %>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var x = 1; x <= doc; x++) { %>
+                    <tr>
+                        <% var temp = String.fromCharCode(64 + x); %>
+                            <td>
+                                <%= temp; %>
+                            </td>
+                            <% for (var y = 1; y <= ngang; y++) { %>
+                                <td>
+                                    <input style="display: none;" class="btn-check" type="checkbox" name="seat[]" id="checkSeat<%= temp + '' + y; %>" autocomplete="off" value="<%= temp + '' + y; %>">
+                                    <!-- <%= temp + '' + y; %> -->
+                                    <label class="btn btn-outline-primary" for="checkSeat<%= temp + '' + y; %>"><%= temp + '' + y; %></label><br>
+                                </td>
+                                <% }; %>
+                    </tr>
+                    <% }; %>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

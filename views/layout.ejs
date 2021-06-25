@@ -22,6 +22,8 @@
     <!-- Theme styles -->
     <link href="/assets/css/dot-icons.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/theme.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/signup.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/signup.css" rel="stylesheet" type="text/css">
 </head>
 
 <body class="body">
@@ -49,14 +51,25 @@
                         <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
                             <a class="nav-link" href="/">Trang Chủ</a>
                         </li>
-                        <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
-                            <a class="nav-link" href="movie-info-sidebar-right.html">Thông tin phim</a>
-                        </li>
+                        <% if(currentUser) { %>
+                            <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
+                                <a class="nav-link" href="/profile">Thông tin cá nhân</a>
+                            </li>
+                            <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
+                                <a class="nav-link" href="/history">Lịch sử mua vé</a>
+                            </li>
+                            <% } %>
                     </ul>
-                    <div class="navbar-extra">
-                        <a class="btn-theme btn" href="/auth/login">Đăng Nhập</a>
-                        <a class="btn-theme btn" href="/auth/signup">Đăng Ký</a>
-                    </div>
+                    <% if(currentUser) { %>
+                        <div class="navbar-extra">
+                            <a class="btn-theme btn" href="/auth/logout">Đăng Xuất</a>
+                        </div>
+                        <% } else { %>
+                            <div class="navbar-extra">
+                                <a class="btn-theme btn" href="/auth/login">Đăng Nhập</a>
+                                <a class="btn-theme btn" href="/auth/signup">Đăng Ký</a>
+                            </div>
+                            <% } %>
                 </div>
             </nav>
         </div>
