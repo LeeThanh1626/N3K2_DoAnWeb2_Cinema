@@ -9,6 +9,7 @@ const Cinemas = require('../models/cinemas');
 const Movie = require('../models/movie');
 const Showtime = require('../models/showtime');
 const Ticket = require('../models/ticket');
+const WishList = require('../models/wishlist');
 const { title } = require('process');
 
 const router = express.Router();
@@ -16,10 +17,6 @@ const router = express.Router();
 //Code get, post here
 //Test http://localhost:3000/
 //Test
-router.get('/', function(req, res) {
-    const title = "Trang chủ";
-    res.render('user/homepage', { title });
-});
 router.get('/hello', function(req, res) {
     const title = "Hello";
     res.render('test/hello', { title });
@@ -30,6 +27,13 @@ router.get('/helloson', function(req, res) {
 
     res.render('test/helloSon', { title, name });
 });
+
+//Chức năng ND03: trang chủ
+router.get('/', asyncHandler(async function(req, res) {
+    const listMovie = await Movie.findAll();
+    const favourite = await WishList.findAll();
+    res.render('user/homepage', { listMovie, favourite });
+}))
 
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
