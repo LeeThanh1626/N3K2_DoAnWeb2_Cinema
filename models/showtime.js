@@ -33,7 +33,28 @@ const Showtime = db.define('Showtime', {
 });
 
 //code function here
+//thêm xuất chiếu
+Showtime.addShowtime = async function(idCinema, idMovie, start, finish, money) {
+    await Showtime.create({
+        idCinema: idCinema,
+        idMovie: idMovie,
+        start: start,
+        finish: finish,
+        money: money,
+    })
+}
 
+//xóa xuất chiếu
+Showtime.deleteShowtime = async function(id) {
+    const temp = await Showtime.findByPk(id);
+    await temp.destroy();
+}
+
+//cập nhật xuất chiếu
+//không yêu cầu
+// Showtime.updateShowtime = async function(id, idCinema, idMovie, start, finish, money) {
+
+// }
 
 
 

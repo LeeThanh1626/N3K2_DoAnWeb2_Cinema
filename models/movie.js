@@ -12,7 +12,7 @@ const Movie = db.define('Movie', {
     },
     //ngày công chiếu
     openingDay: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     //poster phim
@@ -28,7 +28,27 @@ const Movie = db.define('Movie', {
 });
 
 //code function here
+//thêm phim
+Movie.addMovie = async function(name, openingDay, poster, time) {
+    await Cinema.create({
+        name: name,
+        openingDay: openingDay,
+        poster: poster,
+        time: time,
+    })
+}
 
+//xóa phim
+Movie.deleteMovie = async function(id) {
+    const temp = await Movie.findByPk(id);
+    await temp.destroy();
+}
+
+//cập nhật phim
+//không yêu cầu
+// Movie.updateMovie = async function(id, name, openingDay, poster, time) {
+
+// }
 
 
 
