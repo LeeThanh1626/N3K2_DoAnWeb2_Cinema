@@ -9,6 +9,7 @@ const Cinemas = require('../models/cinemas');
 const Movie = require('../models/movie');
 const Showtime = require('../models/showtime');
 const Ticket = require('../models/ticket');
+const WishList = require('../models/wishlist');
 
 const router = express.Router();
 
