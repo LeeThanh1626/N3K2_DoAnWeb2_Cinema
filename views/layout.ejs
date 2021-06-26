@@ -52,23 +52,38 @@
                             <a class="nav-link" href="/">Trang Chủ</a>
                         </li>
                         <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
-                            <a class="nav-link" href="/">Tìm Kiếm</a>
+                            <a class="nav-link" href="/search">Tìm Kiếm</a>
                         </li>
-                        <% if(currentUser) { %>
+                        <% if(currentUser) {
+                            if(currentUser.permission === 1 ){ %>
                             <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
-                                <a class="nav-link" href="/profile">Thông Tin Cá Nhân</a>
+                                <a class="nav-link" href="/admin/statistic">Thống Kê Doanh Thu</a>
                             </li>
-                            <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
-                                <a class="nav-link" href="/history">Lịch Sử Mua Vé</a>
-                            </li>
-                            <% } %>
+                            <% } else { %>
+                                <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
+                                    <a class="nav-link" href="/profile">Thông Tin Cá Nhân</a>
+                                </li>
+                                <li class="nav-item nav-item-arrow-down nav-hover-show-sub">
+                                    <a class="nav-link" href="/history">Lịch Sử Mua Vé</a>
+                                </li>
+                                <% }} %>
                     </ul>
                     <% if(currentUser) { %>
                         <div class="navbar-extra">
+                            <!-- <label for="action"><b>Tìm kiếm theo</b></label> -->
                             <a class="btn-theme btn" href="/auth/logout">Đăng Xuất</a>
                         </div>
                         <% } else { %>
                             <div class="navbar-extra">
+                                <!-- <form style="border:1px solid #ccc" method="POST">
+                                    <select id="action" name="action" class="form-select">
+                                        <option value="Movie" selected><b>Phim</b></option>
+                                        <option value="Cinema"><b>Cụm rạp</b></option>
+                                    </select>
+                                    <input>
+                                    <a class="btn-theme btn" href="/">Tìm Kiếm</a>
+                                <button type="submit">Xem thống kê</button>
+                                </form> -->
                                 <a class="btn-theme btn" href="/auth/login">Đăng Nhập</a>
                                 <a class="btn-theme btn" href="/auth/signup">Đăng Ký</a>
                             </div>

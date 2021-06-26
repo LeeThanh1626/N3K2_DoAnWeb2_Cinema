@@ -95,15 +95,24 @@ router.post('/mangageMovie', asyncHandler(async function(req, res) {
 
 //Màn hình chủ chức năng QL03 và QL04
 //Chưa hoàn thành -- Còn đường dẫn đến views
-router.get('/statistics', asyncHandler(async function(req, res) {
-    res.render('');
+router.get('/statistic', asyncHandler(async function(req, res) {
+    res.render('admin/statistic');
 }))
 
 //Chức năng QL03 và QL04: thống kê doanh thu theo cụm rạp và theo phim
-router.post('/statistics', asyncHandler(async function(req, res) {
-    const action = req.query.action;
+router.post('/statistic', asyncHandler(async function(req, res) {
+    // const action = req.query.action;
     //from ... to ... : bắt đầu từ .... đến ...
-    const { from, to } = req.body;
+    const { action, from, to } = req.body;
+
+    const a = new Date(from);
+    const b = new Date(to);
+    // console.log(a.getDate());
+    // console.log(a.getMonth());
+    // console.log(a.getFullYear());
+    // console.log(b.getDate());
+    // console.log(b.getMonth());
+    // console.log(b.getFullYear());
 
     //Tạo list đối tượng { name:..., ticket:..., money:... } truyền vào form doanh thu
     const listStatistic = [];
@@ -111,11 +120,19 @@ router.post('/statistics', asyncHandler(async function(req, res) {
     const listBooking = await Booking.findAll();
     const listShowtime = await Showtime.findAll();
     const listMovie = await Movie.findAll();
+    const listCinema = await Cinema.findAll();
+    const listCinemas = await Cinemas.findAll();
 
     //Xử lý doanh thu phim
     listBooking.forEach(tempBooking => {
+        const dataDate = tempBooking.createdAt;
+        const date = new Date(dataDate);
+        // console.log(dataDate.getDate());
+        // console.log(dataDate.getMonth());
+        // console.log(dataDate.getFullYear());
         //Kiểm tra ngày đặt chỗ có trong khoảng thời gian from ... to không
-        if (tempBooking.createdAt >= from && tempBooking.createdAt <= to) {
+        // if (dataDate.getDate() === a.getDate() && dataDate.getMonth() === a.getMonth() && dataDate.getFullYear() === a.getFullYear() && dataDate.getDate() === b.getDate() && dataDate.getMonth() === b.getMonth() && dataDate.getFullYear() === b.getFullYear()) {
+        if (((date.getTime() - a.getTime()) / 1000 >= 0) && ((b.getTime() - date.getTime()) / 1000 >= 0)) {
             listShowtime.forEach(tempShowtime => {
                 //Kiểm tra đặt chỗ của xuất chiếu nào
                 if (tempBooking.idShowTime === tempShowtime.id) {
@@ -143,10 +160,12 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                 }
                             }
                         });
-                        res.render('', { listStatistic })
+                        // console.log(listStatistic);
+                        // res.render('admin/resultStatistic', { listStatistic });
                     } else { //Doanh thu của cụm rạp
                         //Cụm rạp
-                        listCinemas.forEach(tempCinema => {
+                        console.log("1");
+                        listCinema.forEach(tempCinema => {
                             //Kiểm tra xuất chiếu của rạp nào
                             if (tempShowtime.idCinema === tempCinema.id) {
                                 listCinemas.forEach(tempCinemas => {
@@ -173,12 +192,14 @@ router.post('/statistics', asyncHandler(async function(req, res) {
                                 })
                             }
                         });
-                        res.render('', { listStatistic });
                     }
                 }
             })
         }
     })
+    const tu = a.getDate() + '-' + (a.getMonth() + 1) + '-' + a.getFullYear();
+    const den = b.getDate() + '-' + (b.getMonth() + 1) + '-' + b.getFullYear();
+    res.render('admin/resultStatistic', { listStatistic, tu, den, action });
 }))
 
 module.exports = router
