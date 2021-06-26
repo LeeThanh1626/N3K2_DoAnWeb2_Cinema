@@ -39,12 +39,12 @@ router.get('/profile', asyncHandler(async function(req, res) {
 router.get('/', asyncHandler(async function(req, res) {
     const listMovie = await Movie.findAll();
     const favourite = await WishList.findAll();
-    res.render('user/homepage', { listMovie, favourite });
+    res.render('homepage/homepage', { listMovie, favourite });
 }))
 
 //Chức năng ND04: tìm kiếm
 router.get('/search', asyncHandler(async function(req, res) {
-    res.render('user/search');
+    res.render('search/search');
 }))
 
 router.post('/search', asyncHandler(async function(req, res) {
@@ -53,6 +53,8 @@ router.post('/search', asyncHandler(async function(req, res) {
     const xfind = find.toLowerCase();
     const listResult = [];
     const listMovie = await Movie.findAll();
+    const listCinema = await Cinema.findAll();
+    const listCinemas = await Cinemas.findAll();
     if (action === "Movie") {
         listMovie.forEach(movie => {
             const temp = movie.name.toLowerCase();
@@ -61,8 +63,36 @@ router.post('/search', asyncHandler(async function(req, res) {
             }
         })
     }
+    if (action === "Cinema") {
+        listCinema.forEach(cinema => {
+            const temp = cinema.name.toLowerCase();
+            if (temp.search(xfind) !== -1) {
+                listResult.push(cinema);
+            }
+        })
+    } else {
+        listCinemas.forEach(cinemas => {
+            const temp = cinemas.name.toLowerCase();
+            if (temp.search(xfind) !== -1) {
+                listResult.push(cinemas);
+            }
+        })
+    }
 
-    res.render('user/resultSearch', { listResult });
+    res.render('search/resultSearch', { listResult, action, listCinemas });
+}))
+
+router.get('/showtime', asyncHandler(async function(req, res) {
+    const listMovie = await Movie.findAll();
+    const listShowtime = await Showtime.findAll();
+    const list = [];
+    const idCinema = req.query.idCinema;
+    listShowtime.forEach(showtime => {
+        if (showtime.idCinema == idCinema) {
+            list.push(showtime);
+        } else {}
+    })
+    res.render('showtime/showtime', { list, listMovie });
 }))
 
 //Chức năng ND05: đặt vé

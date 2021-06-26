@@ -1,9 +1,12 @@
 <section class="section-long">
     <div class="container">
         <div class="section-head">
-            <h2 class="section-title text-uppercase">Kết quả tìm kiếm theo phim</h2>
+            <h2 class="section-title text-uppercase">Xuất chiếu</h2>
+            <!-- <p class="section-text">Dates: 13 - 15 february 2019</p> -->
         </div>
-        <% listResult.forEach(movie=>{ %>
+        <% listMovie.forEach(movie => { 
+            list.forEach(showtime => {
+                if (movie.id === showtime.idMovie){ %>
             <article class="movie-line-entity">
                 <div class="entity-poster" data-role="hover-wrap">
                     <div class="embed-responsive embed-responsive-poster">
@@ -48,28 +51,15 @@
                     <div class="text-uppercase entity-extra-title">Showtime</div>
                     <div class="entity-showtime">
                         <div class="showtime-wrap">
-                            <div class="showtime-item">
-                                <span class="disabled btn-time btn" aria-disabled="true">11 : 30</span>
-                            </div>
-                            <div class="showtime-item">
-                                <a class="btn-time btn" aria-disabled="false" href="#">13 : 25</a>
-                            </div>
-                            <div class="showtime-item">
-                                <a class="btn-time btn" aria-disabled="false" href="#">16 : 07</a>
-                            </div>
-                            <div class="showtime-item">
-                                <a class="btn-time btn" aria-disabled="false" href="#">19 : 45</a>
-                            </div>
-                            <div class="showtime-item">
-                                <a class="btn-time btn" aria-disabled="false" href="#">21 : 30</a>
-                            </div>
-                            <div class="showtime-item">
-                                <a class="btn-time btn" aria-disabled="false" href="#">23 : 10</a>
-                            </div>
+                            <% list.forEach(time=>{ %>
+                                <div class="showtime-item">
+                                    <span class="disabled btn-time btn" aria-disabled="true"><%= time.start %></span>
+                                </div>
+                                <% }) %>
                         </div>
                     </div>
                 </div>
             </article>
-            <% })  %>
+            <% break;}})})  %>
     </div>
 </section>
