@@ -42,6 +42,29 @@ router.get('/', asyncHandler(async function(req, res) {
     res.render('user/homepage', { listMovie, favourite });
 }))
 
+//Chức năng ND04: tìm kiếm
+router.get('/search', asyncHandler(async function(req, res) {
+    res.render('user/search');
+}))
+
+router.post('/search', asyncHandler(async function(req, res) {
+    //Tìm kiếm theo phim
+    const { action, find } = req.body;
+    const xfind = find.toLowerCase();
+    const listResult = [];
+    const listMovie = await Movie.findAll();
+    if (action === "Movie") {
+        listMovie.forEach(movie => {
+            const temp = movie.name.toLowerCase();
+            if (temp.search(xfind) !== -1) {
+                listResult.push(movie);
+            }
+        })
+    }
+
+    res.render('user/resultSearch', { listResult });
+}))
+
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
 router.get('/booking', asyncHandler(async function(req, res) {
