@@ -88,8 +88,26 @@ router.get('/showtime', asyncHandler(async function(req, res) {
     const list = [];
     const idCinema = req.query.idCinema;
     listShowtime.forEach(showtime => {
+        const tempDate = new Date(showtime.start)
         if (showtime.idCinema == idCinema) {
-            list.push(showtime);
+            const exits = list.find(u => u.idMovie === showtime.idMovie);
+            if (exits) { //Nếu có tồn tại 
+                list.forEach(u => {
+                    if (u.idMovie === showtime.idMovie) { //Cập nhật lại số vé và doanh thu
+                        const show = tempDate.getHours() + ':' + tempDate.getMinutes();
+                        u.start.push(show);
+                    }
+                })
+            } else { //Nếu không tồn tại
+                const temp = { //Tạo đối tượng mới 
+                    id: showtime.id,
+                    idCinema: showtime.idCinema,
+                    idMovie: showtime.idMovie,
+                    // start: showtime.start.getHour() + ':' + showtime.start.getMinutes(),
+                    start: [tempDate.getHours() + ':' + tempDate.getMinutes()],
+                }
+                list.push(temp); //Thêm vào mảng
+            }
         } else {}
     })
     res.render('showtime/showtime', { list, listMovie });
@@ -101,17 +119,19 @@ router.get('/booking', asyncHandler(async function(req, res) {
     //Truyền vào id rạp chiếu và id phim
     //Load ngang dọc, showtime => truyền xuống view
 
-    // const idCinema = req.query.idCinema;
-    // const idMovie = req.query.idMovie;
-    // const idShowTime = req.query.idShowTime;
+    const idCinema = req.query.idCinema;
+    const idMovie = req.query.idMovie;
+    const idShowtime = req.query.idShowtime;
 
-    const idShowTime = 7;
-    const tempShowtime = await Showtime.findByPk(idShowTime);
+    const tempShowtime = await Showtime.findByPk(idShowtime);
+    console.log(tempShowtime);
+    // const idMovie = tempShowtime.idMovie;
     const tempCinema = await Cinema.findByPk(tempShowtime.idCinema);
+    // const idCinema = tempCinema.id;
 
     const ngang = tempCinema.horizontalSize;
     const doc = tempCinema.verticalSize;
-    res.render('user/seat', { ngang, doc });
+    res.render('user/seat', { ngang, doc, idMovie, idCinema });
 }))
 
 router.post('/booking', asyncHandler(async function(req, res) {
