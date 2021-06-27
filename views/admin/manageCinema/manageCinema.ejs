@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="section-head">
+        <h2 class="section-title text-uppercase">Quản lý rạp của cụm rạp
+            <%= nameCinemas %>
+        </h2>
+    </div>
+    <div class="table-responsive table-purchases">
+        <table class="table table-hover table-striped margin-bottom-10">
+            <thead style="background-color: black; color: white;">
+                <tr>
+                    <th>Tên rạp</th>
+                    <th>Số hàng ghế</th>
+                    <th>Số cột ghế</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-warning">
+                    <td colspan="5" align="center">
+                        <a href="/admin/addCinema">
+                            <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
+                        </a>
+                    </td>
+                </tr>
+                <% listCinema.forEach(cinema => { %>
+                    <tr>
+                        <td>
+                            <%= cinema.name %>
+                        </td>
+                        <td>
+                            <%= cinema.horizontalSize %>
+                        </td>
+                        <td>
+                            <%= cinema.verticalSize %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <!-- /.table -->
+    </div>
+</div>

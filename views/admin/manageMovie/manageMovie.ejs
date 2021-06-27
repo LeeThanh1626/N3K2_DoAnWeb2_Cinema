@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="section-head">
+        <h2 class="section-title text-uppercase">Quản lý phim</h2>
+    </div>
+    <div class="table-responsive table-purchases">
+        <table class="table table-hover table-striped margin-bottom-10">
+            <thead style="background-color: black; color: white;">
+                <tr>
+                    <th>Tên phim</th>
+                    <th>Thời lượng</th>
+                    <th>Ngày công chiếu</th>
+                    <th>Poster</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-warning">
+                    <td colspan="5" align="center">
+                        <a href="/admin/addMovie">
+                            <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
+                        </a>
+                    </td>
+                </tr>
+                <!-- <?php $stmt = $db->query("SELECT * FROM contents ORDER BY date DESC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    if ($row['email'] == $_SESSION['email']) {
+                ?> -->
+                <% listMovie.forEach(movie => { %>
+                    <tr>
+                        <td>
+                            <%= movie.name %>
+                        </td>
+                        <td>
+                            <%= movie.time %>
+                        </td>
+                        <td>
+                            <%= movie.openingDay %>
+                        </td>
+                        <td>
+                            <!-- <%= movie.poster %> -->
+                            (Chưa có ảnh)
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <!-- /.table -->
+    </div>
+</div>
