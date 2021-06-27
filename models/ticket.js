@@ -29,9 +29,7 @@ Ticket.addTicket = async function(idBooking, idSeat, money) {
         idBooking: idBooking,
         idSeat: idSeat,
         money: money,
-    })
-}
-
-
+    });
+};
 
 module.exports = Ticket;

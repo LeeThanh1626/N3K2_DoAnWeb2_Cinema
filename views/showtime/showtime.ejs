@@ -53,8 +53,8 @@
                         <div class="showtime-wrap">
                             <% showtime.start.forEach(start=>{ %>
                                 <div class="showtime-item">
-                                    <a class="btn-time btn" aria-disabled="false" href="/booking?idShowtime=<%= showtime.id %>&idMovie=<%= showtime.idMovie %>&idCinema=<%= showtime.idCinema %>">
-                                        <%= start %>
+                                    <a class="btn-time btn" aria-disabled="false" href="/booking?idShowtime=<%= start.id %>&idMovie=<%= showtime.idMovie %>&idCinema=<%= showtime.idCinema %>">
+                                        <%= start.begin %>
                                     </a>
                                 </div>
                                 <% }) %>
