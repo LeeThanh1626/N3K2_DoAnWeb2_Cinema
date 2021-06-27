@@ -94,7 +94,10 @@ router.get('/showtime', asyncHandler(async function(req, res) {
             if (exits) { //Nếu có tồn tại 
                 list.forEach(u => {
                     if (u.idMovie === showtime.idMovie) { //Cập nhật lại số vé và doanh thu
-                        const show = tempDate.getHours() + ':' + tempDate.getMinutes();
+                        const show = {
+                            id: showtime.id,
+                            begin: tempDate.getHours() + ':' + tempDate.getMinutes()
+                        };
                         u.start.push(show);
                     }
                 })
@@ -104,7 +107,10 @@ router.get('/showtime', asyncHandler(async function(req, res) {
                     idCinema: showtime.idCinema,
                     idMovie: showtime.idMovie,
                     // start: showtime.start.getHour() + ':' + showtime.start.getMinutes(),
-                    start: [tempDate.getHours() + ':' + tempDate.getMinutes()],
+                    start: [{
+                        id: showtime.id,
+                        begin: tempDate.getHours() + ':' + tempDate.getMinutes(),
+                    }],
                 }
                 list.push(temp); //Thêm vào mảng
             }
@@ -119,45 +125,61 @@ router.get('/booking', asyncHandler(async function(req, res) {
     //Truyền vào id rạp chiếu và id phim
     //Load ngang dọc, showtime => truyền xuống view
 
-    const idCinema = req.query.idCinema;
-    const idMovie = req.query.idMovie;
+    // const idCinema = req.query.idCinema;
+    // const idMovie = req.query.idMovie;
     const idShowtime = req.query.idShowtime;
+    // console.log(idCinema);
+    // console.log(idMovie);
+    // console.log(idShowtime);
 
-    const tempShowtime = await Showtime.findByPk(idShowtime);
-    console.log(tempShowtime);
+    const tempShowtime = await Showtime.findById(idShowtime);
+    // console.log(tempShowtime);
+    // console.log(tempShowtime.idCinema);
+    // console.log(tempShowtime.idMovie);
     // const idMovie = tempShowtime.idMovie;
-    const tempCinema = await Cinema.findByPk(tempShowtime.idCinema);
+    // const idCinema = tempShowtime.idCinema;
+    // console.log(idMovie);
+    // console.log(idCinema);
+    const tempMovie = await Movie.findByPk(tempShowtime.idMovie);
+    const idMovie = tempMovie.id;
+    const tempCinema = await Cinema.findById(tempShowtime.idCinema);
+    const idCinema = tempCinema.id;
     // const idCinema = tempCinema.id;
+    // console.log(idMovie);
+    // console.log(idCinema);
 
     const ngang = tempCinema.horizontalSize;
     const doc = tempCinema.verticalSize;
-    res.render('user/seat', { ngang, doc, idMovie, idCinema });
+    res.render('user/seat', { ngang, doc, idMovie, idCinema, idShowtime });
 }))
 
 router.post('/booking', asyncHandler(async function(req, res) {
 
-    const { seat } = req.body //get mảng mã ghế muốn đặt
+    const { seat } = req.body; //get mảng mã ghế muốn đặt
     console.log(seat);
 
-    res.redirect('/booking');
+    const idUser = req.session.userId; //iduser trong session
+    const idShowtime = req.query.idShowtime; //get
+    const tempShowtime = await Showtime.findById(idShowtime);
+    const totalMoney = tempShowtime.money * seat.length; //showtime.money*listSeat.length
+    console.log(totalMoney);
+    //lưu row mới vào bảng booking
+    await Booking.addBooking(idUser, idShowtime, totalMoney);
 
-    // const idUser = "abc"; //iduser trong session
-    // const idShowTime = 1; //get
-    // const totalMoney = 100000; //showtime.money*listSeat.length
-
-    // //lưu row mới vào bảng booking
-    // await Booking.addBooking(idUser, idShowTime, totalMoney);
-    // const listBooking = await Booking.findAll();
-    // //chạy listSeat lưu vào bảng Ticket
-    // // listSeat.forEach(u => {
-    // //     const money = 50000; //showtime.money
-    // //     await Ticket.addTicket(listBooking.length - 1, u, money);
-    // // })
-    // for (const u of listSeat) {
+    const listBooking = await Booking.findAll();
+    //chạy listSeat lưu vào bảng Ticket
+    // listSeat.forEach(u => {
     //     const money = 50000; //showtime.money
     //     await Ticket.addTicket(listBooking.length - 1, u, money);
-    // }
-
+    // })
+    for (const u of seat) {
+        const money = tempShowtime.money; //showtime.money
+        console.log(listBooking.length - 1);
+        console.log(u);
+        console.log(money);
+        await Ticket.addTicket(listBooking.length - 1, u, money);
+    }
+    res.redirect('/history');
     // res.redirect('/user/his?noti=bookingSuccess', { noti });
 }))
 

@@ -33,6 +33,11 @@ const Showtime = db.define('Showtime', {
 });
 
 //code function here
+
+Showtime.findById = async function(id) {
+    return Showtime.findByPk(id);
+}
+
 //thêm xuất chiếu
 Showtime.addShowtime = async function(idCinema, idMovie, start, finish, money) {
     await Showtime.create({

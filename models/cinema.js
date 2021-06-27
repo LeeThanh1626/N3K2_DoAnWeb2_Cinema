@@ -28,6 +28,9 @@ const Cinema = db.define('Theater', {
 });
 
 //code function here
+Cinema.findById = async function(id) {
+    return Cinema.findByPk(id);
+}
 
 //thêm rạp
 Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize) {
