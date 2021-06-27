@@ -38,7 +38,7 @@
                             </div>
                             <div class="info info-short">
                                 <span class="text-theme info-icon"><i class="fas fa-clock"></i></span>
-                                <span class="info-text">125</span>
+                                <span class="info-text"><%= movie.time %></span>
                                 <span class="info-rest">&nbsp;min</span>
                             </div>
                         </div>
@@ -51,15 +51,17 @@
                     <div class="text-uppercase entity-extra-title">Showtime</div>
                     <div class="entity-showtime">
                         <div class="showtime-wrap">
-                            <% list.forEach(time=>{ %>
+                            <% showtime.start.forEach(start=>{ %>
                                 <div class="showtime-item">
-                                    <span class="disabled btn-time btn" aria-disabled="true"><%= time.start %></span>
+                                    <a class="btn-time btn" aria-disabled="false" href="/booking?idShowtime=<%= showtime.id %>&idMovie=<%= showtime.idMovie %>&idCinema=<%= showtime.idCinema %>">
+                                        <%= start %>
+                                    </a>
                                 </div>
                                 <% }) %>
                         </div>
                     </div>
                 </div>
             </article>
-            <% break;}})})  %>
+            <% }})})  %>
     </div>
 </section>
