@@ -22,39 +22,86 @@ router.get('/', function(req, res) {
 //Chức năng QL02
 //Hiển thị trang quản lý rạp và cụm rạp
 //Chưa hoàn thành -- Còn đường dẫn đến views
-router.get('/manageCinema', asyncHandler(async function(req, res) {
-    const listCinema = await Cinema.findAll();
+router.get('/manageCinemas', asyncHandler(async function(req, res) {
     const listCinemas = await Cinemas.findAll();
-
-    res.render('', { listCinema, listCinemas });
+    res.render('admin/manageCinemas/manageCinemas', { listCinemas });
 }))
+router.get('/manageCinema', asyncHandler(async function(req, res) {
+    const idCinemas = req.query.idCinemas;
+    const tempCinemas = await Cinemas.findByPk(idCinemas);
+    const nameCinemas = tempCinemas.name;
+    const listTemp = await Cinema.findAll();
+    const listCinema = [];
+    listTemp.forEach(temp => {
+        if (temp.idCinemas == idCinemas) {
+            listCinema.push(temp);
+        }
+    })
+    res.render('admin/manageCinema/manageCinema', { listCinema, nameCinemas });
+}))
+router.get('/manageMovie', asyncHandler(async function(req, res) {
+    const listMovie = await Movie.findAll();
+    res.render('admin/manageMovie/manageMovie', { listMovie });
+}))
+router.get('/manageShowtime', asyncHandler(async function(req, res) {
+    const listTempShowtime = await Showtime.findAll();
+    const listShowtime = [];
+    for (const showtime of listTempShowtime) {
+        const tempCinema = await Cinema.findByPk(showtime.idCinema);
+        const tempMovie = await Movie.findByPk(showtime.idMovie);
+        const tempstart = new Date(showtime.start)
+        const tempfinish = new Date(showtime.finish)
+        const start = tempstart.getDay() + '/' + (tempstart.getMonth() + 1) + '/' + tempstart.getFullYear() + ' ' + tempstart.getHours() + ':' + tempstart.getMinutes();
+        const finish = tempfinish.getDay() + '/' + (tempfinish.getMonth() + 1) + '/' + tempfinish.getFullYear() + ' ' + tempfinish.getHours() + ':' + tempfinish.getMinutes();
+        const temp = {
+            id: showtime.id,
+            nameCinema: tempCinema.name,
+            nameMovie: tempMovie.name,
+            start: start,
+            finish: finish,
+            money: showtime.money,
+        }
+        listShowtime.push(temp);
+    }
+    res.render('admin/manageShowtime/manageShowtime', { listShowtime });
+}))
+
+router.get('/addCinemas', asyncHandler(async function(req, res) {}))
+router.get('/addCinema', asyncHandler(async function(req, res) {}))
+router.get('/addMovie', asyncHandler(async function(req, res) {}))
+router.get('/addShowtime', asyncHandler(async function(req, res) {}))
+
+router.post('/addCinemas', asyncHandler(async function(req, res) {}))
+router.post('/addCinema', asyncHandler(async function(req, res) {}))
+router.post('/addMovie', asyncHandler(async function(req, res) {}))
+router.post('/addShowtime', asyncHandler(async function(req, res) {}))
 
 //Thêm, xóa, sửa Cinemas, Cinema, Movie, Showtime
-router.post('/manageCinema', asyncHandler(async function(req, res) {
-    const action = req.query.action;
-    const id = req.query.id;
+// router.post('/manageCinema', asyncHandler(async function(req, res) {
+//     const action = req.query.action;
+//     const id = req.query.id;
 
-    if (action === "addCinema") { //Thêm rạp chiếu
-        const { name, idCinemas, horizontalSize, verticalSize } = req.body;
-        await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
-    } else if (action === "deleteCinema") { //Xóa rạp chiếu
-        await Cinema.deleteCinema(id);
-    } else if (action === "updateCinema") { //Cập nhật rạp chiếu
-        const { name, idCinemas, horizontalSize, verticalSize } = req.body;
-        await Cinema.updateCinema(id, name, idCinemas, horizontalSize, verticalSize);
-    } else if (action === "addCinemas") { //Thêm cụm rạp
-        const { name, address } = req.body;
-        await Cinemas.addCinemas(name, address);
-    } else if (action === "deleteCinemas") { //Xóa cụm rạp
-        await Cinemas.deleteCinemas(id);
-    } else if (action === "updateCinemas") { //Cập nhật cụm rạp
-        const { name, address } = req.body;
-        await Cinemas.updateCinemas(id, name, address);
-    }
+//     if (action === "addCinema") { //Thêm rạp chiếu
+//         const { name, idCinemas, horizontalSize, verticalSize } = req.body;
+//         await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
+//     } else if (action === "deleteCinema") { //Xóa rạp chiếu
+//         await Cinema.deleteCinema(id);
+//     } else if (action === "updateCinema") { //Cập nhật rạp chiếu
+//         const { name, idCinemas, horizontalSize, verticalSize } = req.body;
+//         await Cinema.updateCinema(id, name, idCinemas, horizontalSize, verticalSize);
+//     } else if (action === "addCinemas") { //Thêm cụm rạp
+//         const { name, address } = req.body;
+//         await Cinemas.addCinemas(name, address);
+//     } else if (action === "deleteCinemas") { //Xóa cụm rạp
+//         await Cinemas.deleteCinemas(id);
+//     } else if (action === "updateCinemas") { //Cập nhật cụm rạp
+//         const { name, address } = req.body;
+//         await Cinemas.updateCinemas(id, name, address);
+//     }
 
-    //render lại danh sách cụm rạp và rạp
-    res.redirect('/admin/manageCinema');
-}))
+//     //render lại danh sách cụm rạp và rạp
+//     res.redirect('/admin/manageCinema');
+// }))
 
 //Hiển thị trang quản lý phim và xuất chiếu
 //Chưa hoàn thành -- Còn đường dẫn đến views
@@ -96,7 +143,7 @@ router.post('/mangageMovie', asyncHandler(async function(req, res) {
 //Màn hình chủ chức năng QL03 và QL04
 //Chưa hoàn thành -- Còn đường dẫn đến views
 router.get('/statistic', asyncHandler(async function(req, res) {
-    res.render('admin/statistic');
+    res.render('admin/statistic/statistic');
 }))
 
 //Chức năng QL03 và QL04: thống kê doanh thu theo cụm rạp và theo phim
@@ -199,7 +246,7 @@ router.post('/statistic', asyncHandler(async function(req, res) {
     })
     const tu = a.getDate() + '-' + (a.getMonth() + 1) + '-' + a.getFullYear();
     const den = b.getDate() + '-' + (b.getMonth() + 1) + '-' + b.getFullYear();
-    res.render('admin/resultStatistic', { listStatistic, tu, den, action });
+    res.render('admin/statistic/resultStatistic', { listStatistic, tu, den, action });
 }))
 
 module.exports = router

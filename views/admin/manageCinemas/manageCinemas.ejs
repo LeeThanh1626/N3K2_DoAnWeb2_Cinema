@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="section-head">
+        <h2 class="section-title text-uppercase">Quản lý cụm rạp</h2>
+    </div>
+    <div class="table-responsive table-purchases">
+        <table class="table table-hover table-striped margin-bottom-10">
+            <thead style="background-color: black; color: white;">
+                <tr>
+                    <th>Tên cụm rạp</th>
+                    <th>Địa chỉ</th>
+                    <th style="width:15%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-warning">
+                    <td colspan="5" align="center">
+                        <a href="/admin/addCinemas">
+                            <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
+                        </a>
+                    </td>
+                </tr>
+                <!-- <?php $stmt = $db->query("SELECT * FROM contents ORDER BY date DESC");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    if ($row['email'] == $_SESSION['email']) {
+                ?> -->
+                <% listCinemas.forEach(cinemas => { %>
+                    <tr>
+                        <td>
+                            <%= cinemas.name %>
+                        </td>
+                        <td>
+                            <%= cinemas.address %>
+                        </td>
+                        <td>
+                            <a href="/admin/manageCinema?idCinemas=<%= cinemas.id %>">
+                                <i class="fa fa-plus-circle">Xem chi tiết</i>
+                            </a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <!-- /.table -->
+    </div>
+</div>
