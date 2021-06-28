@@ -33,8 +33,10 @@ const Booking = db.define('Booking', {
 Booking.addBooking = async function(idUser, idShowTime, totalMoney) {
     // const time = new Date(Date.now() + (1000 * 60 * (-(new Date()).getTimezoneOffset()))).toISOString().replace('T', ' ').replace('Z', '');
     const time = new Date(Date.now());
+    const all = (await Booking.findAll()).length;
     console.log(time);
     await Booking.create({
+        id: all + 1,
         idUser: idUser,
         idShowTime: idShowTime,
         datetime: time,
