@@ -30,12 +30,19 @@ const Movie = db.define('Movie', {
 //code function here
 //thêm phim
 Movie.addMovie = async function(name, openingDay, poster, time) {
-    await Cinema.create({
+    const all = (await Movie.findAll()).length;
+    await Movie.create({
+        id: all + 1,
         name: name,
         openingDay: openingDay,
         poster: poster,
         time: time,
     })
+    if (all < (await Movie.findAll()).length) {
+        return 1;
+    } else {
+        return -1;
+    }
 }
 
 //xóa phim

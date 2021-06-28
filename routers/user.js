@@ -177,7 +177,7 @@ router.post('/booking', asyncHandler(async function(req, res) {
         console.log(listBooking.length - 1);
         console.log(u);
         console.log(money);
-        await Ticket.addTicket(listBooking.length - 1, u, money);
+        await Ticket.addTicket(listBooking.length, u, money);
     }
     res.redirect('/history');
     // res.redirect('/user/his?noti=bookingSuccess', { noti });

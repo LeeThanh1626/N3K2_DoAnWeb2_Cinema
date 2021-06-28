@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="section-head">
+        <h2 class="section-title text-uppercase">Thêm rạp trong cụm rạp
+            <%= nameCinemas %>
+        </h2>
+    </div>
+    <form action="/admin/addCinema?idCinemas=<%= idCinemas %>" method="post">
+        <div class="container">
+            <div class="mb-3">
+                <label for="name" class="form-label"><b>Tên</b></label>
+                <input type="text" class="form-control" placeholder="Nhập tên rạp" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="horizontalSize" class="form-label"><b>Số hàng ghế</b></label>
+                <input type="text" class="form-control" placeholder=" Nhập số hàng ghế của rạp" name="horizontalSize" required>
+            </div>
+            <div class="mb-3">
+                <label for="verticalSize" class="form-label"><b>Số cột ghế</b></label>
+                <input type="text" class="form-control" placeholder=" Nhập số cột ghế của rạp" name="verticalSize" required>
+            </div>
+            <div>
+                <button type="submit">Thêm</button>
+            </div>
+        </div>
+    </form>
+</div>
