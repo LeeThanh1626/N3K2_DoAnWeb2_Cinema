@@ -1,47 +1,57 @@
 <div class="container">
-    <div class="section-head">
-        <h2 class="section-title text-uppercase">Quản lý suất chiếu</h2>
-    </div>
-    <div class="table-responsive table-purchases">
-        <table class="table table-hover table-striped margin-bottom-10">
-            <thead style="background-color: black; color: white;">
-                <tr>
-                    <th>Tên rạp</th>
-                    <th>Tên phim</th>
-                    <th>Thời điểm bắt đầu</th>
-                    <th>Thời điểm kết thúc</th>
-                    <th>Giá vé</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-warning">
-                    <td colspan="5" align="center">
-                        <a href="/admin/addShowtime">
-                            <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
-                        </a>
-                    </td>
-                </tr>
-                <% listShowtime.forEach(showtime => { %>
-                    <tr>
-                        <td>
-                            <%= showtime.nameCinema %>
-                        </td>
-                        <td>
-                            <%= showtime.nameMovie %>
-                        </td>
-                        <td>
-                            <%= showtime.start %>
-                        </td>
-                        <td>
-                            <%= showtime.finish %>
-                        </td>
-                        <td>
-                            <%= showtime.money %>
-                        </td>
-                    </tr>
-                    <% }) %>
-            </tbody>
-        </table>
-        <!-- /.table -->
-    </div>
-</div>
+    <% if(result == 1){ %>
+        <div class="alert alert-success" role="alert">
+            Thêm rạp thành công.
+        </div>
+        <% } else if(result == -1){ %>
+            <div class="alert alert-success" role="alert">
+                Thêm rạp thất bại.
+            </div>
+            <% } %>
+                <div class="container">
+                    <div class="section-head">
+                        <h2 class="section-title text-uppercase">Quản lý suất chiếu</h2>
+                    </div>
+                    <div class="table-responsive table-purchases">
+                        <table class="table table-hover table-striped margin-bottom-10">
+                            <thead style="background-color: black; color: white;">
+                                <tr>
+                                    <th>Tên rạp</th>
+                                    <th>Tên phim</th>
+                                    <th>Thời điểm bắt đầu</th>
+                                    <th>Thời điểm kết thúc</th>
+                                    <th>Giá vé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-warning">
+                                    <td colspan="5" align="center">
+                                        <a href="/admin/addShowtime">
+                                            <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <% listShowtime.forEach(showtime => { %>
+                                    <tr>
+                                        <td>
+                                            <%= showtime.nameCinema %>
+                                        </td>
+                                        <td>
+                                            <%= showtime.nameMovie %>
+                                        </td>
+                                        <td>
+                                            <%= showtime.start %>
+                                        </td>
+                                        <td>
+                                            <%= showtime.finish %>
+                                        </td>
+                                        <td>
+                                            <%= showtime.money %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                </div>

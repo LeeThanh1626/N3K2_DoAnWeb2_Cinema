@@ -53,6 +53,7 @@ router.get('/manageMovie', asyncHandler(async function(req, res) {
 //Trang hiển thị danh sách suất chiếu
 router.get('/manageShowtime', asyncHandler(async function(req, res) {
     const listTempShowtime = await Showtime.findAll();
+    const result = req.query.result;
     const listShowtime = [];
     for (const showtime of listTempShowtime) {
         const tempCinema = await Cinema.findByPk(showtime.idCinema);
@@ -71,7 +72,7 @@ router.get('/manageShowtime', asyncHandler(async function(req, res) {
         }
         listShowtime.push(temp);
     }
-    res.render('admin/manageShowtime/manageShowtime', { listShowtime });
+    res.render('admin/manageShowtime/manageShowtime', { listShowtime, result });
 }))
 
 //Trang thêm cụm rạp
@@ -79,8 +80,11 @@ router.get('/addCinemas', asyncHandler(async function(req, res) {
     res.render('admin/manageCinemas/addCinemas');
 }))
 router.post('/addCinemas', asyncHandler(async function(req, res) {
+    const result = -1;
     const { name, address } = req.body;
-    const result = await Cinemas.addCinemas(name, address);
+    if (name && address) {
+        const result = await Cinemas.addCinemas(name, address);
+    }
     res.redirect('/admin/manageCinemas?result=' + result);
 }))
 
@@ -91,88 +95,40 @@ router.get('/addCinema', asyncHandler(async function(req, res) {
     res.render('admin/manageCinema/addCinema', { nameCinemas, idCinemas });
 }))
 router.post('/addCinema', asyncHandler(async function(req, res) {
+    const result = -1;
     const { name, horizontalSize, verticalSize } = req.body;
     const idCinemas = req.query.idCinemas;
-    const result = await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
+    if (name && horizontalSize && verticalSize) {
+        const result = await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
+    }
     res.redirect('/admin/manageCinema?result=' + result + '&idCinemas=' + idCinemas);
 }))
 
 //Trang thêm phim
-router.get('/addMovie', asyncHandler(async function(req, res) {}))
-router.post('/addMovie', asyncHandler(async function(req, res) {}))
+router.get('/addMovie', asyncHandler(async function(req, res) {
+    res.render('admin/manageMovie/addMovie');
+}))
+router.post('/addMovie', asyncHandler(async function(req, res) {
+
+}))
 
 //Trang thêm xuất chiếu
-router.get('/addShowtime', asyncHandler(async function(req, res) {}))
-router.post('/addShowtime', asyncHandler(async function(req, res) {}))
+router.get('/addShowtime', asyncHandler(async function(req, res) {
+    const listMovie = await Movie.findAll();
+    const listCinema = await Cinema.findAll();
 
-
-
-
-
-
-//Thêm, xóa, sửa Cinemas, Cinema, Movie, Showtime
-// router.post('/manageCinema', asyncHandler(async function(req, res) {
-//     const action = req.query.action;
-//     const id = req.query.id;
-
-//     if (action === "addCinema") { //Thêm rạp chiếu
-//         const { name, idCinemas, horizontalSize, verticalSize } = req.body;
-//         await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
-//     } else if (action === "deleteCinema") { //Xóa rạp chiếu
-//         await Cinema.deleteCinema(id);
-//     } else if (action === "updateCinema") { //Cập nhật rạp chiếu
-//         const { name, idCinemas, horizontalSize, verticalSize } = req.body;
-//         await Cinema.updateCinema(id, name, idCinemas, horizontalSize, verticalSize);
-//     } else if (action === "addCinemas") { //Thêm cụm rạp
-//         const { name, address } = req.body;
-//         await Cinemas.addCinemas(name, address);
-//     } else if (action === "deleteCinemas") { //Xóa cụm rạp
-//         await Cinemas.deleteCinemas(id);
-//     } else if (action === "updateCinemas") { //Cập nhật cụm rạp
-//         const { name, address } = req.body;
-//         await Cinemas.updateCinemas(id, name, address);
-//     }
-
-//     //render lại danh sách cụm rạp và rạp
-//     res.redirect('/admin/manageCinema');
-// }))
-
-//Hiển thị trang quản lý phim và xuất chiếu
-//Chưa hoàn thành -- Còn đường dẫn đến views
-// router.get('/manageMovie', asyncHandler(async function(req, res) {
-//     const listMovie = await Movie.findAll();
-//     const listShowtime = await Showtime.findAll();
-//     const title = "Quản lý phim"
-
-//     res.render('auth/manageMovie', { title, listMovie, listShowtime });
-// }))
-
-// router.post('/mangageMovie', asyncHandler(async function(req, res) {
-//     const action = req.query.action;
-//     const id = req.query.id;
-
-//     if (action === "addCinema") { //Thêm phim
-//         //name, openingDay, poster, time
-//         const { name, openingDay, poster, time } = req.body;
-//         await Cinema.addCinema(name, openingDay, poster, time);
-//     } else if (action === "deleteCinema") { //Xóa phim
-//         await Cinema.deleteCinema(id);
-//     } else if (action === "updateCinema") { //Cập nhật phim
-//         const { name, openingDay, poster, time } = req.body;
-//         await Cinema.updateCinema(id, name, openingDay, poster, time);
-//     } else if (action === "addCinemas") { //Thêm xuất chiếu
-//         const { idCinema, idMovie, start, finish, money } = req.body;
-//         await Cinemas.addCinemas(idCinema, idMovie, start, finish, money);
-//     } else if (action === "deleteCinemas") { //Xóa xuất chiếu
-//         await Cinemas.deleteCinemas(id);
-//     } else if (action === "updateCinemas") { //Cập nhật xuất chiếu
-//         const { idCinema, idMovie, start, finish, money } = req.body;
-//         await Cinemas.updateCinemas(id, idCinema, idMovie, start, finish, money);
-//     }
-
-//     //render lại trang quản lý phim và xuất chiếu
-//     res.require('/admin/manageMovie');
-// }))
+    res.render('admin/manageShowtime/addShowtime', { listMovie, listCinema });
+}))
+router.post('/addShowtime', asyncHandler(async function(req, res) {
+    const result = -1;
+    const { idCinema, idMovie, date, start, finish, money } = req.body;
+    if (idCinema && idMovie && date && start && finish && money) {
+        const ts = date + ' ' + start + ':00:00+07';
+        const fs = date + ' ' + finish + ':00:00+07';
+        const result = await Showtime.addShowtime(idCinema, idMovie, ts, fs, money);
+    }
+    res.redirect('/admin/manageShowtime?result=' + result);
+}))
 
 //Màn hình chủ chức năng QL03 và QL04
 //Chưa hoàn thành -- Còn đường dẫn đến views
@@ -188,14 +144,6 @@ router.post('/statistic', asyncHandler(async function(req, res) {
 
     const a = new Date(from);
     const b = new Date(to);
-    // console.log(a.getDate());
-    // console.log(a.getMonth());
-    // console.log(a.getFullYear());
-    // console.log(b.getDate());
-    // console.log(b.getMonth());
-    // console.log(b.getFullYear());
-
-    //Tạo list đối tượng { name:..., ticket:..., money:... } truyền vào form doanh thu
     const listStatistic = [];
 
     const listBooking = await Booking.findAll();
@@ -208,9 +156,6 @@ router.post('/statistic', asyncHandler(async function(req, res) {
     listBooking.forEach(tempBooking => {
         const dataDate = tempBooking.createdAt;
         const date = new Date(dataDate);
-        // console.log(dataDate.getDate());
-        // console.log(dataDate.getMonth());
-        // console.log(dataDate.getFullYear());
         //Kiểm tra ngày đặt chỗ có trong khoảng thời gian from ... to không
         // if (dataDate.getDate() === a.getDate() && dataDate.getMonth() === a.getMonth() && dataDate.getFullYear() === a.getFullYear() && dataDate.getDate() === b.getDate() && dataDate.getMonth() === b.getMonth() && dataDate.getFullYear() === b.getFullYear()) {
         if (((date.getTime() - a.getTime()) / 1000 >= 0) && ((b.getTime() - date.getTime()) / 1000 >= 0)) {
