@@ -79,7 +79,7 @@ router.post('/search', asyncHandler(async function(req, res) {
         })
     }
 
-    res.render('search/resultSearch', { listResult, action, listCinemas });
+    res.render('search/resultSearch', { listResult, action, listCinemas, listMovie });
 }))
 
 router.get('/showtime', asyncHandler(async function(req, res) {
