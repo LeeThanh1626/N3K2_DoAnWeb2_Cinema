@@ -1,6 +1,10 @@
 const { promisify } = require('util');
 const asyncHandler = require('express-async-handler');
 const express = require('express');
+const multer = require('multer');
+const rename = promisify(require('fs').rename);
+const upload = multer({ storage: new multer.memoryStorage() });
+// const upload = multer({ dest: './public/images' })
 
 const User = require('../models/user');
 const Booking = require('../models/booking');
@@ -46,8 +50,9 @@ router.get('/manageCinema', asyncHandler(async function(req, res) {
 
 //Trang hiển thị danh sách phim
 router.get('/manageMovie', asyncHandler(async function(req, res) {
+    const result = req.query.result;
     const listMovie = await Movie.findAll();
-    res.render('admin/manageMovie/manageMovie', { listMovie });
+    res.render('admin/manageMovie/manageMovie', { listMovie, result });
 }))
 
 //Trang hiển thị danh sách suất chiếu
@@ -108,8 +113,23 @@ router.post('/addCinema', asyncHandler(async function(req, res) {
 router.get('/addMovie', asyncHandler(async function(req, res) {
     res.render('admin/manageMovie/addMovie');
 }))
-router.post('/addMovie', asyncHandler(async function(req, res) {
+router.post('/addMovie', upload.single('pic'), asyncHandler(async function(req, res) {
+    const pic = req.file.buffer;
+    // await rename(req.file.path, `./public/images/${(await Movie.findAll()).length + 1}.jpg`)
+    const { name, time, date } = req.body;
+    const day = new Date(date);
+    const result = await Movie.addMovie(name, day, pic, time);
+    res.redirect('/admin/manageMovie?result=' + result);
+}))
 
+//Hiển thị hình ảnh
+router.get('/image/:id', asyncHandler(async function(req, res) {
+    const movie = await Movie.findByPk(req.params.id);
+    if (!movie || !movie.poster) {
+        res.status(404).send('File not found');
+    } else {
+        res.header('Content-Type', 'image/jpeg').send(movie.poster);
+    }
 }))
 
 //Trang thêm xuất chiếu

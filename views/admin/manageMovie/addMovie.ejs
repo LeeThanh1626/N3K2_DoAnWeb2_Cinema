@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="section-head">
+        <h2 class="section-title text-uppercase">Thêm phim</h2>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div class="container">
+
+            <div class="mb-3">
+                <label for="name" class="form-label"><b>Tên phim</b></label>
+                <input type="text" class="form-control" placeholder=" Nhập vào tên phim" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="time" class="form-label"><b>Thời lượng phim</b></label>
+                <input type="text" class="form-control" placeholder=" Nhập vào thười lượng phim" name="time" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="pic" class="form-label">Upload ảnh</label>
+                <input class="form-control form-control-sm" id="pic" name="pic" type="file">
+            </div>
+
+            <div class="mb-3">
+                <label for="date"><b>Ngày công chiếu của phim</b></label>
+                <input type="date" id="date" name="date" class="form-control">
+            </div>
+
+            <div>
+                <button type="submit">Thêm</button>
+            </div>
+        </div>
+    </form>
+</div>
