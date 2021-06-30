@@ -116,9 +116,9 @@ router.get('/addMovie', asyncHandler(async function(req, res) {
 router.post('/addMovie', upload.single('pic'), asyncHandler(async function(req, res) {
     const pic = req.file.buffer;
     // await rename(req.file.path, `./public/images/${(await Movie.findAll()).length + 1}.jpg`)
-    const { name, time, date } = req.body;
+    const { name, time, date, theloai, directed, starring, country, content } = req.body;
     const day = new Date(date);
-    const result = await Movie.addMovie(name, day, pic, time);
+    const result = await Movie.addMovie(name, day, pic, time, theloai, directed, starring, country, content);
     res.redirect('/admin/manageMovie?result=' + result);
 }))
 
