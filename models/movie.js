@@ -25,11 +25,36 @@ const Movie = db.define('Movie', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    //thể loại
+    theloai: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //đạo diễn
+    directed: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //diễn viên
+    starring: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //quốc gia
+    country: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //tóm tắt
+    content: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
 });
 
 //code function here
 //thêm phim
-Movie.addMovie = async function(name, openingDay, poster, time) {
+Movie.addMovie = async function(name, openingDay, poster, time, theloai, directed, starring, country, content) {
     const all = (await Movie.findAll()).length;
     await Movie.create({
         id: all + 1,
@@ -37,6 +62,11 @@ Movie.addMovie = async function(name, openingDay, poster, time) {
         openingDay: openingDay,
         poster: poster,
         time: time,
+        theloia: theloai,
+        directed: directed,
+        starring: starring,
+        country: country,
+        content: content,
     })
     if (all < (await Movie.findAll()).length) {
         return 1;
