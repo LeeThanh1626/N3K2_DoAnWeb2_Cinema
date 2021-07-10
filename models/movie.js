@@ -50,6 +50,11 @@ const Movie = db.define('Movie', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    //Trailer
+    trailer: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 });
 
 //code function here
@@ -67,6 +72,7 @@ Movie.addMovie = async function(name, openingDay, poster, time, theloai, directe
         starring: starring,
         country: country,
         content: content,
+        trailer: trailer,
     })
     if (all < (await Movie.findAll()).length) {
         return 1;
