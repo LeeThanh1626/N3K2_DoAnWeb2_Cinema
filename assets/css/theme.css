@@ -765,10 +765,7 @@ a:hover {
     [5. Section]
 */
 
-.section-long {
-    margin-top: 6rem;
-    margin-bottom: 6rem;
-}
+
 
 .section-solid-long {
     padding-top: 6rem;
@@ -867,18 +864,15 @@ a:hover {
 
 .section-bottom {
     margin-top: 3rem;
-    text-align: center;
     line-height: 1.2;
 }
 
-.section-bottom .btn {
-    min-width: 8rem;
-}
 
 .section-sidebar+.section-sidebar {
     margin-top: 2rem;
     border-top: 2px dotted #eee;
-    padding-top: 2rem;
+    padding-right: 2rem;
+    margin-right: 100px;
 }
 
 .section-sidebar .section-head,
@@ -886,9 +880,7 @@ a:hover {
     -webkit-background-size: 1rem auto;
     -moz-background-size: 1rem auto;
     background-size: 1rem auto;
-    padding-left: 2rem;
-    min-height: 2.5rem;
-    margin-bottom: 2rem;
+   
 }
 
 .section-sidebar .section-title,
@@ -1239,8 +1231,8 @@ textarea.form-control {
     filter: alpha(opacity=0);
 }
 
-.input-view-flat .form-check-input:[type="radio"]~.form-check-icon,
-.input-view-flat .form-check-input:[type="radio"]~.form-check-icon:after {
+.input-view-flat .form-check-input:input[type="radio"]~.form-check-icon,
+.input-view-flat .form-check-input:input[type="radio"]~.form-check-icon:after {
     border-radius: 50%;
 }
 
@@ -1337,7 +1329,10 @@ textarea.form-control {
     padding: 0.5rem 1.25rem;
     font-family: 'Oswald';
 }
-
+.btn .active{
+    background-color: #007bff;
+    color: #fff;
+}
 .btn-sm,
 .btn-group-sm>.btn {
     font-size: 0.8125rem;
@@ -1623,8 +1618,8 @@ textarea.form-control {
     font-family: 'Oswald';
     font-weight: 500;
     display: inline-block;
-    line-height: 1.2em;
-    height: 1.2em;
+    line-height: 1em;
+    height: 1em;
     font-size: 0.8333em;
     color: #333;
 }
@@ -1741,7 +1736,9 @@ textarea.form-control {
 .header-horizontal .nav-link:active {
     color: #ff8a00;
 }
-
+.active{
+    color: #ff8a00;
+}
 .header-horizontal .nav-link.active~.nav {
     display: block;
 }
@@ -1957,12 +1954,15 @@ textarea.form-control {
         position: relative;
         z-index: 1;
     }
+    /* active*/
     .header-horizontal .nav-link.active {
-        color: #666;
-        background-color: #fff;
-        -webkit-box-shadow: 0 0.5rem 0 #fff, 0 0.125rem 0.25rem rgba(0, 0, 0, 0.4);
-        box-shadow: 0 0.5rem 0 #fff, 0 0.125rem 0.25rem rgba(0, 0, 0, 0.4);
+        background-color: #ff8a00;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 0.3rem 0.3rem;
+        border-radius: 0.25rem;
     }
+
     .header-horizontal .nav-link.active:hover {
         color: #ff8a00;
     }
@@ -2019,6 +2019,7 @@ textarea.form-control {
 @media (min-width: 768px) {
     .header-view-pannel .navbar-nav>li>a {
         text-transform: uppercase;
+        font-size: 13px;
     }
     .header-view-pannel .navbar-extra {
         margin-left: auto;
@@ -2035,9 +2036,9 @@ textarea.form-control {
         height: 6rem;
     }
     .header-view-pannel .navbar-brand {
-        font-size: 3rem;
+        font-size: 2rem;
         min-width: 20%;
-        margin-right: 2rem;
+        margin-right: -9rem;
     }
     .header-view-pannel .navbar-nav>.nav-item {
         margin: 0 1.25rem;
@@ -2250,7 +2251,7 @@ textarea.form-control {
         padding-right: 1rem;
     }
     .sidebar-container .sidebar {
-        width: 33.3333%;
+        
         -webkit-flex-shrink: 0;
         flex-shrink: 0;
         -webkit-box-flex: 0;
@@ -2267,7 +2268,8 @@ textarea.form-control {
 
 @media (min-width: 1200px) {
     .sidebar-container .sidebar {
-        width: 25%;
+        width: 510px;
+        height: 100px;
     }
 }
 
@@ -3412,24 +3414,7 @@ a.paginator-item:hover {
 /* shot line view */
 
 .movie-short-line-entity {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: box;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -o-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-lines: multiple;
-    -moz-box-lines: multiple;
-    -o-box-lines: multiple;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+  width: 100%;
 }
 
 .movie-short-line-entity+.movie-short-line-entity {
