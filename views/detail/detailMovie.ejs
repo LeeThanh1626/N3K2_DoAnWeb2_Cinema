@@ -10,6 +10,7 @@
 </section>
 <div class="container">
     <div class="sidebar-container">
+
         <div class="content">
             <section class="section-long">
                 <div class="section-line">
@@ -18,13 +19,6 @@
                             <div class="embed-responsive embed-responsive-poster">
                                 <img class="embed-responsive-item" src="/admin/image/<%= movie.id %>" alt="" />
                             </div>
-                            <!-- <div class="d-over bg-theme-lighted collapse animated faster" data-show-class="fadeIn show" data-hide-class="fadeOut show">
-                                <div class="entity-play">
-                                    <a class="action-icon-theme action-icon-bordered rounded-circle" href="https://www.youtube.com/watch?v=d96cjJhvlMA" data-magnific-popup="iframe">
-                                        <span class="icon-content"><i class="fas fa-play"></i></span>
-                                    </a>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="entity-content">
                             <h2 class="entity-title">
@@ -90,7 +84,19 @@
                     </div>
 
             </section>
-            </div>
 
         </div>
+        <div class="sidebar section-long order-lg-last">
+            <section class="section-sidebar">
+                <div class="section-head">
+                    <h2 class="section-title text-uppercase">Trailer</h2>
+                </div>
+                <div class="movie-short-line-entity">
+                    <iframe width="560" height="315" src="<%= movie.trailer %>"
+                        frameborder="0" allowfullscreen=""></iframe>
+                </div>
+            </section>
+        </div>
+
     </div>
+</div>

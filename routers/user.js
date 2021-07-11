@@ -270,6 +270,10 @@ router.get('/history', asyncHandler(async function(req, res) {
     res.render('user/history', { listHis, listMovie, listCinema, listCinemas });
 
 }));
-
+router.get('/Checkout', asyncHandler(async function(req, res) {
+    const idMovie = req.query.idMovie;
+    const movie = await Booking.findByPk();
+    res.render('user/Checkout', { movie });
+}))
 
 module.exports = router
