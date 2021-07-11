@@ -169,28 +169,14 @@ router.get('/booking', asyncHandler(async function(req, res) {
     //Truyền vào id rạp chiếu và id phim
     //Load ngang dọc, showtime => truyền xuống view
 
-    // const idCinema = req.query.idCinema;
-    // const idMovie = req.query.idMovie;
     const idShowtime = req.query.idShowtime;
-    // console.log(idCinema);
-    // console.log(idMovie);
-    // console.log(idShowtime);
 
     const tempShowtime = await Showtime.findById(idShowtime);
-    // console.log(tempShowtime);
-    // console.log(tempShowtime.idCinema);
-    // console.log(tempShowtime.idMovie);
-    // const idMovie = tempShowtime.idMovie;
-    // const idCinema = tempShowtime.idCinema;
-    // console.log(idMovie);
-    // console.log(idCinema);
+
     const tempMovie = await Movie.findByPk(tempShowtime.idMovie);
     const idMovie = tempMovie.id;
     const tempCinema = await Cinema.findById(tempShowtime.idCinema);
     const idCinema = tempCinema.id;
-    // const idCinema = tempCinema.id;
-    // console.log(idMovie);
-    // console.log(idCinema);
 
     const ngang = tempCinema.horizontalSize;
     const doc = tempCinema.verticalSize;
