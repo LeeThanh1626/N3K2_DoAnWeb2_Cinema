@@ -58,11 +58,15 @@ router.get('/manageMovie', asyncHandler(async function(req, res) {
 //Trang hiển thị danh sách suất chiếu
 router.get('/manageShowtime', asyncHandler(async function(req, res) {
     const listTempShowtime = await Showtime.findAll();
+    console.log(listTempShowtime);
     const result = req.query.result;
     const listShowtime = [];
     for (const showtime of listTempShowtime) {
+        console.log(showtime);
         const tempCinema = await Cinema.findByPk(showtime.idCinema);
+        console.log(tempCinema);
         const tempMovie = await Movie.findByPk(showtime.idMovie);
+        console.log(tempMovie);
         const tempstart = new Date(showtime.start)
         const tempfinish = new Date(showtime.finish)
         const start = tempstart.getDay() + '/' + (tempstart.getMonth() + 1) + '/' + tempstart.getFullYear() + ' ' + tempstart.getHours() + ':' + tempstart.getMinutes();
