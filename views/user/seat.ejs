@@ -1,5 +1,15 @@
+<style>
+    .bg-infoo{
+        background-color: orange;
+        color: white;
+        font-weight: 100px;
+    }
+    .btn1{
+        border: 1px solid orange;
+    }
+</style>
 <div class="container">
-    <div class="p-3 mb-2 bg-info text-dark">
+    <div class="p-3 mb-2 bg-infoo ">
         <p class="text-center fs-4">SCREEN</p>
     </div>
     <form action="/booking?idCinema=<%= idCinema %>&idMovie=<%= idMovie %>&idShowtime=<%= idShowtime %>" method="post">
@@ -25,13 +35,13 @@
                                 <td>
                                     <input style="display: none;" class="btn-check" type="checkbox" name="seat[]" id="checkSeat<%= temp + '' + y; %>" autocomplete="off" value="<%= temp + '' + y; %>">
                                     <!-- <%= temp + '' + y; %> -->
-                                    <label class="btn btn-outline-primary " for="checkSeat<%= temp + '' + y; %>"><%= temp + '' + y; %></label><br>
+                                    <label class="btn btn1" for="checkSeat<%= temp + '' + y; %>"><%= temp + '' + y; %></label><br>
                                 </td>
                                 <% }; %>
                     </tr>
                     <% }; %>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn1">Submit</button>
     </form>
 </div>

@@ -1737,7 +1737,8 @@ textarea.form-control {
     color: #ff8a00;
 }
 .active{
-    color: #ff8a00;
+    color: white;
+    background-color:#ff8a00 ;
 }
 .header-horizontal .nav-link.active~.nav {
     display: block;
