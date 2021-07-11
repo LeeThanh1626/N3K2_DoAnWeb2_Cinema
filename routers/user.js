@@ -170,9 +170,9 @@ router.get('/booking', asyncHandler(async function(req, res) {
     //Load ngang dọc, showtime => truyền xuống view
 
     const idShowtime = req.query.idShowtime;
-
+    console.log(idShowtime);
     const tempShowtime = await Showtime.findById(idShowtime);
-
+    console.log(tempShowtime);
     const tempMovie = await Movie.findByPk(tempShowtime.idMovie);
     const idMovie = tempMovie.id;
     const tempCinema = await Cinema.findById(tempShowtime.idCinema);
@@ -191,6 +191,8 @@ router.post('/booking', asyncHandler(async function(req, res) {
     const idUser = req.session.userId; //iduser trong session
     const idShowtime = req.query.idShowtime; //get
     const tempShowtime = await Showtime.findById(idShowtime);
+    const checkoutMovie = await Movie.findByPk(tempShowtime.idMovie);
+    const checkoutCinema = await Cinema.findByPk(tempShowtime.idCinema);
     const totalMoney = tempShowtime.money * seat.length; //showtime.money*listSeat.length
     console.log(totalMoney);
     //lưu row mới vào bảng booking
@@ -209,7 +211,9 @@ router.post('/booking', asyncHandler(async function(req, res) {
         console.log(money);
         await Ticket.addTicket(listBooking.length, u, money);
     }
-    res.redirect('/history');
+
+    res.render('user/Checkout', { totalMoney, seat, checkoutCinema, checkoutMovie });
+    // res.redirect('/history');
     // res.redirect('/user/his?noti=bookingSuccess', { noti });
 }))
 
@@ -247,7 +251,7 @@ router.get('/history', asyncHandler(async function(req, res) {
         })
     })
 
-    console.log(listHis);
+    // console.log(listHis);
     //Truyền thêm listMovie, Cinema, Cinemas để hiển thị cho idMovie và idCinema
     const listMovie = await Movie.findAll();
     const listCinema = await Cinema.findAll();
