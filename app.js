@@ -38,6 +38,7 @@ app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'))
 
 //Xử lý chức năng đăng nhập của cả admin và user
+//controller
 app.use('/auth', authRouter);
 //Xử lý chức năng của admin
 app.use('/admin', adminRouter);
