@@ -765,8 +765,6 @@ a:hover {
     [5. Section]
 */
 
-
-
 .section-solid-long {
     padding-top: 6rem;
     padding-bottom: 6rem;
@@ -867,7 +865,6 @@ a:hover {
     line-height: 1.2;
 }
 
-
 .section-sidebar+.section-sidebar {
     margin-top: 2rem;
     border-top: 2px dotted #eee;
@@ -880,7 +877,6 @@ a:hover {
     -webkit-background-size: 1rem auto;
     -moz-background-size: 1rem auto;
     background-size: 1rem auto;
-   
 }
 
 .section-sidebar .section-title,
@@ -1329,10 +1325,12 @@ textarea.form-control {
     padding: 0.5rem 1.25rem;
     font-family: 'Oswald';
 }
-.btn .active{
+
+.btn .active {
     background-color: #007bff;
     color: #fff;
 }
+
 .btn-sm,
 .btn-group-sm>.btn {
     font-size: 0.8125rem;
@@ -1736,9 +1734,12 @@ textarea.form-control {
 .header-horizontal .nav-link:active {
     color: #ff8a00;
 }
-.active{
-    color: #ff8a00;
+
+.active {
+    color: white;
+    background-color: #ff8a00;
 }
+
 .header-horizontal .nav-link.active~.nav {
     display: block;
 }
@@ -1962,7 +1963,6 @@ textarea.form-control {
         padding: 0.3rem 0.3rem;
         border-radius: 0.25rem;
     }
-
     .header-horizontal .nav-link.active:hover {
         color: #ff8a00;
     }
@@ -2251,7 +2251,6 @@ textarea.form-control {
         padding-right: 1rem;
     }
     .sidebar-container .sidebar {
-        
         -webkit-flex-shrink: 0;
         flex-shrink: 0;
         -webkit-box-flex: 0;
@@ -3184,7 +3183,7 @@ a.paginator-item:hover {
     opacity: 0.4;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
     filter: alpha(opacity=40);
-    trainsition: all 0.1s linear 0s;
+    /* trainsition: all 0.1s linear 0s; */
 }
 
 .movie-tape-playlist .slick-slide:hover .embed-responsive,
@@ -3414,7 +3413,7 @@ a.paginator-item:hover {
 /* shot line view */
 
 .movie-short-line-entity {
-  width: 100%;
+    width: 100%;
 }
 
 .movie-short-line-entity+.movie-short-line-entity {

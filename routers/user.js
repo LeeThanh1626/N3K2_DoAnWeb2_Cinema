@@ -200,6 +200,13 @@ router.post('/booking', asyncHandler(async function(req, res) {
 
     const listBooking = await Booking.findAll();
     //chạy listSeat lưu vào bảng Ticket
+    listSeat.forEach(u => {
+        const listBooking = await Booking.findAll();
+        const money = 50000; //showtime.money
+        await Ticket.addTicket(listBooking.length - 1, u, money);
+    })
+    const listBooking = await Booking.findAll();
+    //chạy listSeat lưu vào bảng Ticket
     // listSeat.forEach(u => {
     //     const money = 50000; //showtime.money
     //     await Ticket.addTicket(listBooking.length - 1, u, money);
