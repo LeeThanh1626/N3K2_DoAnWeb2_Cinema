@@ -1,0 +1,102 @@
+<section class="after-head d-flex section-text-white position-relative">
+    <div class="d-background" data-image-src="/admin/image/<%= movie.id %>" data-parallax="scroll"></div>
+    <div class="d-background bg-black-80"></div>
+    <div class="top-block top-inner container">
+        <div class="top-block-content">
+            <h1 class="section-title">Chi tiết Phim</h1>
+
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="sidebar-container">
+
+        <div class="content">
+            <section class="section-long">
+                <div class="section-line">
+                    <div class="movie-info-entity">
+                        <div class="entity-poster" data-role="hover-wrap">
+                            <div class="embed-responsive embed-responsive-poster">
+                                <img class="embed-responsive-item" src="/admin/image/<%= movie.id %>" alt="" />
+                            </div>
+                        </div>
+                        <div class="entity-content">
+                            <h2 class="entity-title">
+                                <%= movie.name %>
+                            </h2>
+                            <div class="entity-category">
+                                <!-- <a class="content-link" href="movies-blocks.html">comedy</a>,
+                                <a class="content-link" href="movies-blocks.html">detective</a> -->
+                                <%= movie.theloai %>
+                                    <br>
+                            </div>
+                            <div class="entity-info">
+                                <div class="info-lines">
+                                    <!-- <div class="info info-short">
+                                        <span class="text-theme info-icon"><i class="fas fa-star"></i></span>
+                                        <span class="info-text">8,7</span>
+                                        <span class="info-rest">/10</span>
+                                    </div> -->
+                                    <div class="info info-short">
+                                        <span class="text-theme info-icon"><i class="fas fa-clock"></i></span>
+                                        <span class="info-text">130</span>
+                                        <span class="info-rest">&nbsp;min</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="entity-list">
+                                <li>
+                                    <span class="entity-list-title">Ngày công chiếu:</span>
+                                    <%= movie.openingDay %>
+                                </li>
+                                <li>
+                                    <span class="entity-list-title">Đạo diễn:</span>
+                                    <%= movie.directed %>
+                                </li>
+                                <li>
+                                    <span class="entity-list-title">Diễn viên:</span>
+                                    <%= movie.starring %>
+                                </li>
+                                <li>
+                                    <span class="entity-list-title">Quốc gia:</span>
+                                    <%= movie.country %>
+                                </li>
+                                <!-- <li>
+                                    <span class="entity-list-title">Language:</span>english</li> -->
+                            </ul>
+                            <div class="section-line">
+                                <div class="section-bottom">
+                                    <a class="btn btn-theme" href="/showtimeFilm?idMovie=<%= movie.id%>">Đặt vé</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-line">
+                    <div class="section-head">
+                        <h2 class="section-title text-uppercase">Tóm tắt</h2>
+                    </div>
+                    <div class="section-description">
+                        <p class="lead">
+                            <%= movie.content %>
+                        </p>
+
+                    </div>
+
+            </section>
+
+        </div>
+        <div class="sidebar section-long order-lg-last">
+            <section class="section-sidebar">
+                <div class="section-head">
+                    <h2 class="section-title text-uppercase">Trailer</h2>
+                </div>
+                <div class="movie-short-line-entity">
+                    <iframe width="560" height="315" src="<%= movie.trailer %>"
+                        frameborder="0" allowfullscreen=""></iframe>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>

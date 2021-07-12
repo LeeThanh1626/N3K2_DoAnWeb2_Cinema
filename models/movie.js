@@ -25,17 +25,60 @@ const Movie = db.define('Movie', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    //thể loại
+    theloai: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //đạo diễn
+    directed: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //diễn viên
+    starring: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //quốc gia
+    country: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    //tóm tắt
+    content: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    //Trailer
+    trailer: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 });
 
 //code function here
 //thêm phim
-Movie.addMovie = async function(name, openingDay, poster, time) {
-    await Cinema.create({
+Movie.addMovie = async function(name, openingDay, poster, time, theloai, directed, starring, country, content) {
+    const all = (await Movie.findAll()).length;
+    await Movie.create({
+        id: all + 1,
         name: name,
         openingDay: openingDay,
         poster: poster,
         time: time,
+        theloia: theloai,
+        directed: directed,
+        starring: starring,
+        country: country,
+        content: content,
+        trailer: trailer,
     })
+    if (all < (await Movie.findAll()).length) {
+        return 1;
+    } else {
+        return -1;
+    }
 }
 
 //xóa phim

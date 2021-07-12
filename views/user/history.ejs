@@ -1,0 +1,41 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Thời gian</th>
+                <th scope="col">Phim</th>
+                <th scope="col">Rạp</th>
+                <th scope="col">Ghế</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% listHis.forEach( his => { %>
+                <tr>
+                    <td>
+                        <%= his.date %>
+                    </td>
+                    <% listMovie.forEach( movie => { 
+                        if(his.movie === movie.id){ %>
+                        <td>
+                            <%= movie.name %>
+                        </td>
+                        <% }}) %>
+                            <% listCinema.forEach( cinema => { 
+                            if(his.cinema === cinema.id){ %>
+                                <td>
+                                    <%= cinema.name %>
+                                </td>
+                                <% }}) %>
+                                    <td>
+                                        <%= his.seat %>
+                                    </td>
+                </tr>
+                <% } )  %>
+        </tbody>
+    </table>
+</div>
+
+        <a style="background-color: orange;display: inline-block; color: white; font-size: 30px; margin-left: 300px;margin-bottom: 20px;" href="/Checkout">Thanh Toán</a>
+   
+            
+

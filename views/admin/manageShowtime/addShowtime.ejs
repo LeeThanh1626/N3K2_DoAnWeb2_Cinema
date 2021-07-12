@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="section-head">
+        <h2 class="section-title text-uppercase">Thêm suất chiếu</h2>
+    </div>
+    <form method="post">
+        <div class="container">
+
+            <label for="action"><b>Suất chiếu của rạp</b></label>
+            <select id="idCinema" name="idCinema" class="form-select">
+                <% listCinema.forEach( cinema =>{ %>
+                    <option value="<%= cinema.id %>"><b><%= cinema.name %></b></option>
+                <% }) %>
+            </select>
+            <br>
+
+            <label for="idMovie"><b>Suất chiếu của phim</b></label>
+            <select id="idMovie" name="idMovie" class="form-select">
+                <% listMovie.forEach( movie =>{ %>
+                    <option value="<%= movie.id %>"><b><%= movie.name %></b></option>
+                <% }) %>
+            </select>
+            <br>
+
+            <label for="date"><b>Suất chiếu ngày</b></label>
+            <input type="date" id="date" name="date" class="form-control">
+
+            <label for="start"><b>Suất chiếu bắt đầu tại</b></label>
+            <input type="time" id="start" name="start" class="form-control">
+
+            <label for="finish"><b>Suất chiếu kết thúc tại/b></label>
+            <input type="time" id="finish" name="finish" class="form-control">
+
+            <div class="mb-3">
+                <label for="money" class="form-label"><b>Số tiền của suất chiếu</b></label>
+                <input type="text" class="form-control" placeholder=" Nhập số tiền của suất chiếu" name="money" required>
+            </div>
+
+            <div>
+                <button type="submit">Thêm</button>
+            </div>
+        </div>
+    </form>
+</div>

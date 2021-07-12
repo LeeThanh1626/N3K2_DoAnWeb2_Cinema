@@ -25,13 +25,13 @@ const Ticket = db.define('Ticket', {
 
 //code function here
 Ticket.addTicket = async function(idBooking, idSeat, money) {
+    const all = (await Ticket.findAll()).length;
     await Ticket.create({
+        id: all + 1,
         idBooking: idBooking,
         idSeat: idSeat,
         money: money,
-    })
-}
-
-
+    });
+};
 
 module.exports = Ticket;

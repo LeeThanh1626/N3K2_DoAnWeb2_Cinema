@@ -3,7 +3,9 @@ var bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const db = require('./models/db');
-// const Middlewares = require('./middlewares/auth');
+
+const authMiddleware = require('./middlewares/auth')
+
 var cookieSession = require('cookie-session');
 
 const adminRouter = require('./routers/admin');
@@ -25,6 +27,8 @@ app.use(cookieSession({
     //Cookie Options
     maxAge: 24 * 60 * 60 * 1000,
 }))
+
+app.use(authMiddleware);
 
 //EJS
 app.set('views', './views');

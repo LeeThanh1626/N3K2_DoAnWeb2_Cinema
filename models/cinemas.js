@@ -21,11 +21,33 @@ const Cinemas = db.define('Cinemas', {
 
 //thêm cụm rạp
 Cinemas.addCinemas = async function(name, address) {
+    const all = (await Cinemas.findAll()).length;
     await Cinemas.create({
+        id: all + 1,
         name: name,
         address: address,
     })
+    if (all < (await Cinemas.findAll()).length) {
+        return 1;
+    } else {
+        return -1;
+    }
 }
+
+// Cinemas.addCinemas = async function(name, address) {
+//     try {
+//         const user = await Cinemas.create({
+//                 id: ,
+//                 name: name,
+//                 address: address,
+//             })
+//             // you can now access the newly created user
+//         console.log('success');
+//     } catch (err) {
+//         // print the error details
+//         console.log(err);
+//     }
+// }
 
 //xóa cụm rạp
 Cinemas.deleteCinemas = async function(id) {

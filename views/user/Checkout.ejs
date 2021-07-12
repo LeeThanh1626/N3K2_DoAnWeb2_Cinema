@@ -1,0 +1,181 @@
+<style>
+  .pm_icon {
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+    width: 37px;
+    height: 37px;
+    margin-right: 5px;
+    margin-top: -9px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  body {
+    font-family: Arial;
+    font-size: 17px;
+    padding: 8px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .row {
+    display: -ms-flexbox;
+    /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap;
+    /* IE10 */
+    flex-wrap: wrap;
+    margin: 0 -16px;
+  }
+
+  .col-25 {
+    -ms-flex: 25%;
+    /* IE10 */
+    flex: 25%;
+  }
+
+  .col-50 {
+    -ms-flex: 50%;
+    /* IE10 */
+    flex: 50%;
+  }
+
+  .col-75 {
+    -ms-flex: 75%;
+    /* IE10 */
+    flex: 75%;
+  }
+
+  .col-25,
+  .col-50,
+  .col-75 {
+    padding: 0 16px;
+  }
+
+  .container_a {
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  label {
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+  }
+
+  .btn {
+    background-color: #ff8a00;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .btn:hover {
+    background-color: orange;
+  }
+
+  a {
+    color: #2196F3;
+  }
+
+  hr {
+    border: 1px solid lightgrey;
+  }
+
+  span.price {
+    float: right;
+    color: grey;
+  }
+
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+  @media (max-width: 800px) {
+    .row {
+      flex-direction: column-reverse;
+    }
+
+    .col-25 {
+      margin-bottom: 20px;
+    }
+  }
+</style>
+<br />
+<div class="row">
+  <div class="col-75">
+    <div class="container_a">
+      <form onsubmit="return handle_form_submission()" action="/action_page.php">
+
+        <div class="row">
+
+
+          <div class="col-50">
+            <h3>HÌNH THỨC THANH TOÁN</h3>
+
+            <div class="icon-container">
+              <span class="pm_icon"
+                style="background-image:url('https://www.cgv.vn/media/catalog/product/placeholder/default/viettelpay-logo.jpg')"></span>
+              <span class="pm_icon"
+                style="background-image:url('https://www.cgv.vn/media/catalog/product/placeholder/default/zalopay_icon.png')"></span>
+              <span class="pm_icon"
+                style="background-image:url('https://www.cgv.vn/media/catalog/product/placeholder/default/visa-mastercard-icon.png')"></span>
+              <span class="pm_icon"
+                style="background-image:url('https://www.cgv.vn/media/catalog/product/placeholder/default/atm_icon.png')"></span>
+              <span class="pm_icon"
+                style="background-image:url('https://www.cgv.vn/media/catalog/product/placeholder/default/momo_icon.png');"></span>
+            </div>
+            <label for="cname">TÊN CHỦ THẺ</label>
+            <input type="text" id="cname" name="cardname">
+            <label for="ccnum">SỐ THẺ</label>
+            <input type="text" id="ccnum" name="cardnumber">
+            <div class="row">
+              <div class="col-50">
+                <label for="expyear">NĂM ĐĂNG KÝ</label>
+                <input type="text" id="expyear" name="expyear">
+              </div>
+              <div class="col-50">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <input  type="submit" value="THANH TOÁN" class="btn">
+      </form>
+    </div>
+  </div>
+  <div class="col-25">
+    <div class="container_a">
+      <h4>GIỎ HÀNG <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
+      <p><a href="#">SẢN PHẨM</a> <span class="price">15</span></p>
+
+      <hr>
+      <p>TỔNG TIỀN <span class="price" style="color:black"><b>30</b></span></p>
+    </div>
+  </div>
+</div>
+<script>
+  function handle_form_submission()
+{
+  alert('Thanh toán thành công');
+  return false; //do not submit the form
+}
+</script>

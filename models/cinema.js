@@ -28,15 +28,25 @@ const Cinema = db.define('Theater', {
 });
 
 //code function here
+Cinema.findById = async function(id) {
+    return Cinema.findByPk(id);
+}
 
 //thêm rạp
 Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize) {
+    const all = (await Cinema.findAll()).length;
     await Cinema.create({
+        id: all + 1,
         name: name,
         idCinemas: idCinemas,
         horizontalSize: horizontalSize,
         verticalSize: verticalSize,
     })
+    if (all < (await Cinema.findAll()).length) {
+        return 1;
+    } else {
+        return -1;
+    }
 }
 
 //xóa rạp
