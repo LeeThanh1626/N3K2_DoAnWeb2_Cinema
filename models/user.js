@@ -50,48 +50,49 @@ User.findById = async function(id) {
     return User.findByPk(id);
 }
 
-// User.Register = async function(displayName, email, password) {
-//     const bcrypt = require('bcrypt');
-//     const hash = bcrypt.hashSync(password, 10);
-//     const code = "123";
-//     await User.create({
-//         displayName: displayName,
-//         email: email,
-//         password: hash,
-//         code: code,
-//     });
-//     User.sendEmail(email, code);
-// }
+User.Register = async function(displayName, email, password) {
+    const bcrypt = require('bcrypt');
+    const random = require('random');
+    const hash = bcrypt.hashSync(password, 10);
+    const code = random.int((min = 1000), (max = 9999));
+    await User.create({
+        displayName: displayName,
+        email: email,
+        password: hash,
+        code: code,
+    });
+    User.sendEmail(email, code);
+}
 
-// User.sendEmail = async function(Email, Code) {
-//     const nodemailer = require('nodemailer');
-//     const transporter = nodemailer.createTransport({
-//         host: "smtp.gmail.com",
-//         port: 587,
-//         secure: false,
-//         auth: {
-//             user: 'ltw1.18600232@gmail.com',
-//             pass: 'abcxyz123~'
-//         }
-//     });
-//     const id = await User.findByEmail(Email);
-//     const info = await transporter.sendMail({
-//         from: "ltw1.18600232@gmail.com",
-//         to: Email,
-//         subject: "Xac nhan tai khoan",
-//         text: "Nhan vao lien ket de kich hoat tai khoan",
-//         // html: "<b>https://ltw2-18600232-w3.herokuapp.com/auth/register/confirm?code=" +  Code  + "&id=" + id.id + "</b>"
-//         // html: "<b>localhost:3000/auth/register/confirm?code=" + Code + "&id=" + id.id + "</b>"
-//         html: "<b>https://ltw2-18600232-w3.herokuapp.com/auth/register/confirm?code=" + Code + "&id=" + id.id + "</b>"
-//     });
-// }
+User.sendEmail = async function(Email, Code) {
+    const nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'ltw1.18600232@gmail.com',
+            pass: 'abcxyz123~'
+        }
+    });
+    const id = await User.findByEmail(Email);
+    const info = await transporter.sendMail({
+        from: "ltw1.18600232@gmail.com",
+        to: Email,
+        subject: "Xac nhan tai khoan",
+        text: "Nhan vao lien ket de kich hoat tai khoan",
+        // html: "<b>https://ltw2-18600232-w3.herokuapp.com/auth/register/confirm?code=" +  Code  + "&id=" + id.id + "</b>"
+        html: "<b>localhost:3000/auth/signup/confirm?code=" + Code + "&id=" + id.id + "</b>"
+            // html: "<b>https://ltw2-18600232-w3.herokuapp.com/auth/register/confirm?code=" + Code + "&id=" + id.id + "</b>"
+    });
+}
 
-// User.confirm = async function(code, id) {
-//     const user = await User.findByPk(id);
-//     if (code === user.code)
-//         user.code = null;
-//     await user.save();
-// }
+User.confirm = async function(code, id) {
+    const user = await User.findByPk(id);
+    if (code === user.code)
+        user.code = null;
+    await user.save();
+}
 
 
 module.exports = User;

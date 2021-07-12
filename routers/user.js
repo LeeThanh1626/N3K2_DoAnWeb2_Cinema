@@ -31,6 +31,12 @@ router.get('/helloson', function(req, res) {
     res.render('test/helloSon', { title, name });
 });
 
+//Chức năng ND03: trang chủ
+router.get('/', asyncHandler(async function(req, res) {
+    const listMovie = await Movie.findAll();
+    res.render('user/homepage', { listMovie });
+}))
+
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
 router.get('/booking', asyncHandler(async function(req, res) {
@@ -56,6 +62,16 @@ router.post('booking', asyncHandler(async function(req, res) {
         const money = 50000; //showtime.money
         await Ticket.addTicket(listBooking.length - 1, u, money);
     })
+    const listBooking = await Booking.findAll();
+    //chạy listSeat lưu vào bảng Ticket
+    // listSeat.forEach(u => {
+    //     const money = 50000; //showtime.money
+    //     await Ticket.addTicket(listBooking.length - 1, u, money);
+    // })
+    for (const u of listSeat) {
+        const money = 50000; //showtime.money
+        await Ticket.addTicket(listBooking.length - 1, u, money);
+    }
 
     res.redirect('/user/his?noti=bookingSuccess', { noti });
 }))
