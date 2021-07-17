@@ -96,7 +96,7 @@ User.sendEmail = async function(Email, Code) {
     }));
     const id = await User.findByEmail(Email);
     const info = await transporter.sendMail({
-        from: "ltw1.18600174@heroku.com",
+        from: "ltw1.18600174@gmail.com",
         to: Email,
         replyTo: "ltw1.18600174@gmail.com",
         subject: "Xac nhan tai khoan",
