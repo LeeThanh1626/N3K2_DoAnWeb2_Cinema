@@ -55,18 +55,29 @@ User.findById = async function(id) {
     return User.findByPk(id);
 }
 
-User.Register = async function(displayName, email, password) {
+User.Register = async function(email, password, displayName, phoneNumber) {
     const bcrypt = require('bcrypt');
     const random = require('random');
     const hash = bcrypt.hashSync(password, 10);
     const code = random.int((min = 1000), (max = 9999));
+    console.log(code);
+    const listUser = await User.findAll();
+    const all = listUser.length;
     await User.create({
-        displayName: displayName,
+        id: listUser[all - 1].id + 1,
         email: email,
         password: hash,
+        displayName: displayName,
+        phoneNumber: phoneNumber,
         code: code,
+        permission: 0,
     });
     User.sendEmail(email, code);
+    if (all > (await User.findAll()).length) {
+        return 1;
+    } else {
+        return -1;
+    }
 }
 
 User.sendEmail = async function(Email, Code) {

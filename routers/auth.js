@@ -11,7 +11,8 @@ const router = express.Router();
 //Login, register, logout for admin and user
 router.get('/login', function(req, res) {
     //xử lý
-    res.render('auth/login')
+    const result = req.query.result;
+    res.render('auth/login', { result });
 });
 router.post('/login', asyncHandler(async function(req, res) {
     const { email, password } = req.body;
@@ -30,9 +31,9 @@ router.get('/signup', function(req, res) {
     res.render('auth/signup')
 });
 router.post('/signup', asyncHandler(async function(req, res) {
-    const { name, email, password } = req.body;
-    await User.Register(name, email, password);
-    res.redirect('/auth/login');
+    const { email, password, displayName, phoneNumber } = req.body;
+    const result = await User.Register(email, password, displayName, phoneNumber);
+    res.redirect('/auth/login?noti=' + result);
 }))
 router.get('/signup/confirm', asyncHandler(async function(req, res) {
     const code = req.query.code;
