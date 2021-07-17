@@ -27,8 +27,10 @@ const Cinemas = db.define('Cinemas', {
 
 //thêm cụm rạp
 Cinemas.addCinemas = async function(name, address) {
-    const all = (await Cinemas.findAll()).length;
+    const listCinemas = await Cinemas.findAll()
+    const all = listCinemas.length;
     await Cinemas.create({
+        id: listCinemas[all - 1].id + 1,
         name: name,
         address: address,
     })
