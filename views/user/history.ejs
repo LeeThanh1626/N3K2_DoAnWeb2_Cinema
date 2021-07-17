@@ -9,10 +9,16 @@
             </tr>
         </thead>
         <tbody>
-            <% listHis.forEach( his => { %>
+            <% listHistory.forEach( his => { %>
                 <tr>
                     <td>
-                        <%= his.date %>
+                        <!-- <%= his.date %> -->
+
+                        <%= his.date.getHours() %>:
+                            <%= his.date.getMinutes() %>-
+                                <%= his.date.getUTCDate() %>/
+                                    <%= his.date.getUTCMonth() + 1 %>/
+                                        <%= his.date.getUTCFullYear() %>
                     </td>
                     <% listMovie.forEach( movie => { 
                         if(his.movie === movie.id){ %>
@@ -34,8 +40,3 @@
         </tbody>
     </table>
 </div>
-
-        <a style="background-color: orange;display: inline-block; color: white; font-size: 30px; margin-left: 300px;margin-bottom: 20px;" href="/Checkout">Thanh Toán</a>
-   
-            
-

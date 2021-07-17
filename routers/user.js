@@ -31,8 +31,16 @@ router.get('/helloson', function(req, res) {
 //Chức năng ND02: thông tin cá nhân
 router.get('/profile', asyncHandler(async function(req, res) {
     const profileUser = await User.findByPk(req.session.userId);
-    // const noti = req.query.noti;
-    res.render('user/profile', { profileUser });
+    const noti = req.query.noti;
+    res.render('user/profile', { profileUser, noti });
+}))
+router.post('/profile', asyncHandler(async function(req, res) {
+    const { email, password, displayName, phoneNumber } = req.body;
+    const pf = await User.findByPk(req.session.userId);
+    pf.displayName = displayName;
+    pf.phoneNumber = phoneNumber;
+    await pf.save();
+    res.redirect('/profile?noti=changeSuccess');
 }))
 
 //Chức năng ND03: trang chủ
@@ -198,13 +206,13 @@ router.post('/booking', asyncHandler(async function(req, res) {
     //lưu row mới vào bảng booking
     await Booking.addBooking(idUser, idShowtime, totalMoney);
 
-    const listBooking = await Booking.findAll();
+    // const listBooking = await Booking.findAll();
     //chạy listSeat lưu vào bảng Ticket
-    listSeat.forEach(u => {
-        const listBooking = await Booking.findAll();
-        const money = 50000; //showtime.money
-        await Ticket.addTicket(listBooking.length - 1, u, money);
-    })
+    // listSeat.forEach(u => {
+    //     const listBooking = await Booking.findAll();
+    //     const money = 50000; //showtime.money
+    //     await Ticket.addTicket(listBooking.length - 1, u, money);
+    // })
     const listBooking = await Booking.findAll();
     //chạy listSeat lưu vào bảng Ticket
     // listSeat.forEach(u => {
@@ -213,10 +221,11 @@ router.post('/booking', asyncHandler(async function(req, res) {
     // })
     for (const u of seat) {
         const money = tempShowtime.money; //showtime.money
+        const all = listBooking.length;
         console.log(listBooking.length - 1);
         console.log(u);
         console.log(money);
-        await Ticket.addTicket(listBooking.length, u, money);
+        await Ticket.addTicket(listBooking[all - 1].id, u, money);
     }
 
     res.render('user/Checkout', { totalMoney, seat, checkoutCinema, checkoutMovie });
@@ -225,7 +234,6 @@ router.post('/booking', asyncHandler(async function(req, res) {
 }))
 
 //Chức năng ND06: xem lại danh sách đặt vé trong lịch sử
-//Chưa hoàn thành -- Còn đường dẫn đến views
 router.get('/history', asyncHandler(async function(req, res) {
     //Lưu vào session biến UserID để dùng
     //const UserID = "session_UserID";
@@ -264,7 +272,12 @@ router.get('/history', asyncHandler(async function(req, res) {
     const listCinema = await Cinema.findAll();
     const listCinemas = await Cinemas.findAll();
 
-    res.render('user/history', { listHis, listMovie, listCinema, listCinemas });
+    const listHistory = [];
+    for (var i = listHis.length - 1; i >= 0; i--) {
+        listHistory.push(listHis[i]);
+    }
+
+    res.render('user/history', { listHistory, listMovie, listCinema, listCinemas });
 
 }));
 router.get('/Checkout', asyncHandler(async function(req, res) {

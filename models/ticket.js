@@ -7,8 +7,13 @@ const db = require('./db');
 //Khoan hẵn làm
 const Ticket = db.define('Ticket', {
     //id đặt chỗ
+    id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+    },
     idBooking: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false
     },
     //mã ghế
@@ -27,7 +32,6 @@ const Ticket = db.define('Ticket', {
 Ticket.addTicket = async function(idBooking, idSeat, money) {
     const all = (await Ticket.findAll()).length;
     await Ticket.create({
-        id: all + 1,
         idBooking: idBooking,
         idSeat: idSeat,
         money: money,

@@ -2,10 +2,16 @@
 
 const { DataTypes } = require('sequelize');
 const db = require('./db');
+const Movie = require('./movie');
 
 //Tạo bảng cụm rạp (Cinemas)
 const Cinemas = db.define('Cinemas', {
     //tên cụm rạp
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -23,7 +29,6 @@ const Cinemas = db.define('Cinemas', {
 Cinemas.addCinemas = async function(name, address) {
     const all = (await Cinemas.findAll()).length;
     await Cinemas.create({
-        id: all + 1,
         name: name,
         address: address,
     })
@@ -52,7 +57,12 @@ Cinemas.addCinemas = async function(name, address) {
 //xóa cụm rạp
 Cinemas.deleteCinemas = async function(id) {
     const temp = await Cinemas.findByPk(id);
+    const all = (await Cinemas.findAll()).length;
     await temp.destroy();
+    if (all > (await Cinemas.findAll()).length) {
+        return 2;
+    }
+    return -2;
 }
 
 //cập nhật cụm rạp

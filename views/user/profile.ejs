@@ -1,22 +1,27 @@
 <form style="border:1px solid #ccc" method="POST">
     <div class="container">
-        <h1>Thông tin cá nhân</h1>
-        <hr>
+        <% if(noti === "changeSuccess"){ %>
+            <div class="alert alert-success" role="alert">
+                Cập nhật thông tin thành công thành công.
+            </div>
+            <% }%>
+                <h1>Thông tin cá nhân</h1>
+                <hr>
 
-        <label for="email"><b>Email</b></label>
-        <input type="text" value="<%= profileUser.email %>" name="email" required readonly>
+                <label for="email"><b>Email</b></label>
+                <input type="text" value="<%= profileUser.email %>" name="email" required readonly>
 
-        <label for="password"><b>Mật Khẩu</b></label>
-        <input type="password" value="<%= profileUser.password %>" name="password" required readonly>
+                <label for="password"><b>Mật Khẩu</b></label>
+                <input type="password" value="<%= profileUser.password %>" name="password" required readonly>
 
-        <label for="displayName"><b>Tên hiển thị</b></label>
-        <input type="text" value="<%= profileUser.displayName %>" name="displayName" required>
+                <label for="displayName"><b>Tên hiển thị</b></label>
+                <input type="text" value="<%= profileUser.displayName %>" name="displayName" required>
 
-        <label for="phoneNumber"><b>Số điện thoại</b></label>
-        <input type="text" value="<%= profileUser.phoneNumber %>" name="phoneNumber" required>
+                <label for="phoneNumber"><b>Số điện thoại</b></label>
+                <input type="text" value="<%= profileUser.phoneNumber %>" name="phoneNumber" required>
 
-        <div class="clearfix">
-            <button type="submit">Cập nhật</button>
-        </div>
+                <div class="clearfix">
+                    <button type="submit">Cập nhật</button>
+                </div>
     </div>
 </form>

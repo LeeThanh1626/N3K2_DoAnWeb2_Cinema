@@ -6,6 +6,11 @@ const db = require('./db');
 //Tạo bảng user
 const User = db.define('User', {
     //email
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false

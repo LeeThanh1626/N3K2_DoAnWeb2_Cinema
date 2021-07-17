@@ -75,8 +75,8 @@ router.get('/manageShowtime', asyncHandler(async function(req, res) {
             id: showtime.id,
             nameCinema: tempCinema.name,
             nameMovie: tempMovie.name,
-            start: start,
-            finish: finish,
+            start: showtime.start,
+            finish: showtime.finish,
             money: showtime.money,
         }
         listShowtime.push(temp);
@@ -89,11 +89,13 @@ router.get('/addCinemas', asyncHandler(async function(req, res) {
     res.render('admin/manageCinemas/addCinemas');
 }))
 router.post('/addCinemas', asyncHandler(async function(req, res) {
-    const result = -1;
     const { name, address } = req.body;
-    if (name && address) {
-        const result = await Cinemas.addCinemas(name, address);
-    }
+    const result = await Cinemas.addCinemas(name, address);
+    res.redirect('/admin/manageCinemas?result=' + result);
+}))
+router.get('/deleteCinemas', asyncHandler(async function(req, res) {
+    const idCinemas = req.query.idCinemas;
+    const result = await Cinemas.deleteCinemas(idCinemas);
     res.redirect('/admin/manageCinemas?result=' + result);
 }))
 
@@ -104,12 +106,15 @@ router.get('/addCinema', asyncHandler(async function(req, res) {
     res.render('admin/manageCinema/addCinema', { nameCinemas, idCinemas });
 }))
 router.post('/addCinema', asyncHandler(async function(req, res) {
-    const result = -1;
     const { name, horizontalSize, verticalSize } = req.body;
     const idCinemas = req.query.idCinemas;
-    if (name && horizontalSize && verticalSize) {
-        const result = await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
-    }
+    const result = await Cinema.addCinema(name, idCinemas, horizontalSize, verticalSize);
+    res.redirect('/admin/manageCinema?result=' + result + '&idCinemas=' + idCinemas);
+}))
+router.get('/deleteCinema', asyncHandler(async function(req, res) {
+    const idCinemas = req.query.idCinemas;
+    const idCinema = req.query.idCinema;
+    const result = await Cinema.deleteCinema(idCinema);
     res.redirect('/admin/manageCinema?result=' + result + '&idCinemas=' + idCinemas);
 }))
 
@@ -120,9 +125,14 @@ router.get('/addMovie', asyncHandler(async function(req, res) {
 router.post('/addMovie', upload.single('pic'), asyncHandler(async function(req, res) {
     const pic = req.file.buffer;
     // await rename(req.file.path, `./public/images/${(await Movie.findAll()).length + 1}.jpg`)
-    const { name, time, date, theloai, directed, starring, country, content } = req.body;
+    const { name, time, date, theloai, directed, starring, country, content, trailer } = req.body;
     const day = new Date(date);
-    const result = await Movie.addMovie(name, day, pic, time, theloai, directed, starring, country, content);
+    const result = await Movie.addMovie(name, day, pic, time, theloai, directed, starring, country, content, trailer);
+    res.redirect('/admin/manageMovie?result=' + result);
+}))
+router.get('/deleteMovie', asyncHandler(async function(req, res) {
+    const idMovie = req.query.idMovie;
+    const result = await Movie.deleteMovie(idMovie);
     res.redirect('/admin/manageMovie?result=' + result);
 }))
 
@@ -144,13 +154,15 @@ router.get('/addShowtime', asyncHandler(async function(req, res) {
     res.render('admin/manageShowtime/addShowtime', { listMovie, listCinema });
 }))
 router.post('/addShowtime', asyncHandler(async function(req, res) {
-    const result = -1;
     const { idCinema, idMovie, date, start, finish, money } = req.body;
-    if (idCinema && idMovie && date && start && finish && money) {
-        const ts = date + ' ' + start + ':00:00+07';
-        const fs = date + ' ' + finish + ':00:00+07';
-        const result = await Showtime.addShowtime(idCinema, idMovie, ts, fs, money);
-    }
+    const ts = date + ' ' + start + ':00:00+07';
+    const fs = date + ' ' + finish + ':00:00+07';
+    const result = await Showtime.addShowtime(idCinema, idMovie, ts, fs, money);
+    res.redirect('/admin/manageShowtime?result=' + result);
+}))
+router.get('/deleteShowtime', asyncHandler(async function(req, res) {
+    const idShowtime = req.query.idShowtime;
+    const result = await Showtime.deleteShowtime(idShowtime);
     res.redirect('/admin/manageShowtime?result=' + result);
 }))
 

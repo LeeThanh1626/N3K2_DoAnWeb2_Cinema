@@ -6,6 +6,11 @@ const db = require('./db');
 //Tạo bảng suất chiếu (Showtime)
 const Showtime = db.define('Showtime', {
     //id rạp
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     idCinema: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -40,9 +45,10 @@ Showtime.findById = async function(id) {
 
 //thêm xuất chiếu
 Showtime.addShowtime = async function(idCinema, idMovie, start, finish, money) {
-    const all = (await Showtime.findAll()).length;
+    const listShowtime = await Showtime.findAll();
+    const all = listShowtime.length;
     await Showtime.create({
-        id: all + 1,
+        id: listShowtime[all - 1].id + 1,
         idCinema: idCinema,
         idMovie: idMovie,
         start: start,
@@ -59,7 +65,13 @@ Showtime.addShowtime = async function(idCinema, idMovie, start, finish, money) {
 //xóa xuất chiếu
 Showtime.deleteShowtime = async function(id) {
     const temp = await Showtime.findByPk(id);
+    const all = (await Showtime.findAll()).length;
     await temp.destroy();
+    if (all > (await Showtime.findAll()).length) {
+        return 2;
+    } else {
+        return -2;
+    }
 }
 
 //cập nhật xuất chiếu

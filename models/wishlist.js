@@ -3,9 +3,9 @@
 const { DataTypes } = require('sequelize');
 const db = require('./db');
 
-//Tạo bảng user
+//Tạo bảng WishList
 const WishList = db.define('WishList', {
-    //email
+    //Movie
     idMovie: {
         type: DataTypes.INTEGER,
         allowNull: false

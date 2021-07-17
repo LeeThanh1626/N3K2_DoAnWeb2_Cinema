@@ -1,6 +1,6 @@
 //Đặt chỗ
 
-const { DataTypes, NOW } = require('sequelize');
+const { DataTypes, NOW, UUIDV4 } = require('sequelize');
 const db = require('./db');
 
 //Tạo bảng đặt chỗ (Booking)
@@ -8,6 +8,11 @@ const db = require('./db');
 const Booking = db.define('Booking', {
     // Model attributes are defined here
     //id người dùng
+    id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+    },
     idUser: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -36,7 +41,6 @@ Booking.addBooking = async function(idUser, idShowTime, totalMoney) {
     const all = (await Booking.findAll()).length;
     console.log(time);
     await Booking.create({
-        id: all + 1,
         idUser: idUser,
         idShowTime: idShowTime,
         datetime: time,

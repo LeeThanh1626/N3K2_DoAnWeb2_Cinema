@@ -6,6 +6,11 @@ const db = require('./db');
 //Tạo bảng rạp phim (Cinema)
 const Cinema = db.define('Theater', {
     //tên cụm rạp
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -34,9 +39,10 @@ Cinema.findById = async function(id) {
 
 //thêm rạp
 Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize) {
-    const all = (await Cinema.findAll()).length;
+    const listCinema = await Cinema.findAll();
+    const all = listCinema.length;
     await Cinema.create({
-        id: all + 1,
+        id: listCinema[all - 1].id + 1,
         name: name,
         idCinemas: idCinemas,
         horizontalSize: horizontalSize,
@@ -52,7 +58,13 @@ Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize)
 //xóa rạp
 Cinema.deleteCinema = async function(id) {
     const temp = await Cinema.findByPk(id);
+    const all = (await Cinema.findAll()).length;
     await temp.destroy();
+    if (all > (await Cinema.findAll()).length) {
+        return 2;
+    } else {
+        return -2;
+    }
 }
 
 //cập nhật thông tin rạp

@@ -7,52 +7,65 @@
             <div class="alert alert-success" role="alert">
                 Thêm phim thất bại.
             </div>
-            <% } %>
-                <div class="container">
-                    <div class="section-head">
-                        <h2 class="section-title text-uppercase">Quản lý phim</h2>
-                    </div>
-                    <div class="table-responsive table-purchases">
-                        <table class="table table-hover table-striped margin-bottom-10">
-                            <thead style="background-color: black; color: white;">
-                                <tr>
-                                    <th>Tên phim</th>
-                                    <th>Thời lượng</th>
-                                    <th>Ngày công chiếu</th>
-                                    <th>Poster</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-warning">
-                                    <td colspan="5" align="center">
-                                        <a href="/admin/addMovie">
-                                            <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <!-- <?php $stmt = $db->query("SELECT * FROM contents ORDER BY date DESC");
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    if ($row['email'] == $_SESSION['email']) {
-                ?> -->
-                                <% listMovie.forEach(movie => { %>
-                                    <tr>
-                                        <td>
-                                            <%= movie.name %>
-                                        </td>
-                                        <td>
-                                            <%= movie.time %>
-                                        </td>
-                                        <td>
-                                            <%= movie.openingDay %>
-                                        </td>
-                                        <td>
-                                            <!-- <%= movie.poster %> -->
-                                            (Chưa có ảnh)
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                            </tbody>
-                        </table>
-                        <!-- /.table -->
-                    </div>
+            <% } else if(result == 2){ %>
+                <div class="alert alert-success" role="alert">
+                    Xóa phim thành công.
                 </div>
+                <% } else if(result == -2){ %>
+                    <div class="alert alert-success" role="alert">
+                        Xóa phim thất bại.
+                    </div>
+                    <% } %>
+                        <div class="container">
+                            <div class="section-head">
+                                <h2 class="section-title text-uppercase">Quản lý phim</h2>
+                            </div>
+                            <div class="table-responsive table-purchases">
+                                <table class="table table-hover table-striped margin-bottom-10">
+                                    <thead style="background-color: black; color: white;">
+                                        <tr>
+                                            <th>Tên phim</th>
+                                            <th>Thời lượng</th>
+                                            <th>Ngày công chiếu</th>
+                                            <th>Poster</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-warning">
+                                            <td colspan="5" align="center">
+                                                <a href="/admin/addMovie">
+                                                    <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% listMovie.forEach(movie => { %>
+                                            <tr>
+                                                <td>
+                                                    <%= movie.name %>
+                                                </td>
+                                                <td>
+                                                    <%= movie.time %>
+                                                </td>
+                                                <td>
+                                                    <%= movie.openingDay %>
+                                                </td>
+                                                <td>
+                                                    <!-- <%= movie.poster %> -->
+                                                    <!-- (Chưa có ảnh) -->
+                                                    <div class="embed-responsive embed-responsive-poster">
+                                                        <img class="embed-responsive-item" src="/admin/image/<%= movie.id %>" alt=" " />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/deleteMovie?idMovie=<%= movie.id %>">
+                                                        <i class="fa fa-plus-circle">Xóa</i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                                <!-- /.table -->
+                            </div>
+                        </div>

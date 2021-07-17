@@ -6,6 +6,11 @@ const db = require('./db');
 //Tạo bảng phim (Movie)
 const Movie = db.define('Movie', {
     //tên phim
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -59,15 +64,16 @@ const Movie = db.define('Movie', {
 
 //code function here
 //thêm phim
-Movie.addMovie = async function(name, openingDay, poster, time, theloai, directed, starring, country, content) {
-    const all = (await Movie.findAll()).length;
+Movie.addMovie = async function(name, openingDay, poster, time, theloai, directed, starring, country, content, trailer) {
+    const listMovie = await Movie.findAll();
+    const all = listMovie.length;
     await Movie.create({
-        id: all + 1,
+        id: listMovie[all - 1].id + 1,
         name: name,
         openingDay: openingDay,
         poster: poster,
         time: time,
-        theloia: theloai,
+        theloai: theloai,
         directed: directed,
         starring: starring,
         country: country,
@@ -84,7 +90,13 @@ Movie.addMovie = async function(name, openingDay, poster, time, theloai, directe
 //xóa phim
 Movie.deleteMovie = async function(id) {
     const temp = await Movie.findByPk(id);
+    const all = (await Movie.findAll()).length;
     await temp.destroy();
+    if (all > (await Movie.findAll()).length) {
+        return 2;
+    } else {
+        return -2;
+    }
 }
 
 //cập nhật phim
