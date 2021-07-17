@@ -1,0 +1,72 @@
+<section class="section-long">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title text-uppercase">Xuất chiếu</h2>
+            <!-- <p class="section-text">Dates: 13 - 15 february 2019</p> -->
+            
+               
+            
+        </div>
+        <% listMovie.forEach(movie => { 
+            list.forEach(showtime => {
+                if (movie.id === showtime.idMovie){ %>
+            <article class="movie-line-entity">
+                <div class="entity-poster" data-role="hover-wrap">
+                    <div class="embed-responsive embed-responsive-poster">
+                        <img class="embed-responsive-item" src="/admin/image/<%= movie.id %>" alt="" />
+                    </div>
+                    <!-- <div class="d-over bg-theme-lighted collapse animated faster" data-show-class="fadeIn show" data-hide-class="fadeOut show">
+                        <div class="entity-play">
+                            <a class="action-icon-theme action-icon-bordered rounded-circle" href="https://www.youtube.com/watch?v=q-4n-GISMrs" data-magnific-popup="iframe">
+                                <span class="icon-content"><i class="fas fa-play"></i></span>
+                            </a>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="entity-content">
+                    <h4 class="entity-title">
+                        <a class="content-link" href="movie-info-sidebar-right.html">
+                            <%- movie.name; %>
+                    </h4>
+                    <div class="entity-category">
+                        <a class="content-link" href="movies-blocks.html">crime</a>,
+                        <a class="content-link" href="movies-blocks.html">comedy</a>
+                    </div>
+                    <div class="entity-info">
+                        <div class="info-lines">
+                            <div class="info info-short">
+                                <span class="text-theme info-icon"><i class="fas fa-star"></i></span>
+                                <span class="info-text">8,1</span>
+                                <span class="info-rest">/10</span>
+                            </div>
+                            <div class="info info-short">
+                                <span class="text-theme info-icon"><i class="fas fa-clock"></i></span>
+                                <span class="info-text"><%= movie.time %></span>
+                                <span class="info-rest">&nbsp;min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-short entity-text">Aenean molestie turpis eu aliquam bibendum. Nulla facilisi. Vestibulum quis risus in lorem suscipit tempor. Morbi consectetur enim vitae justo finibus consectetur. Mauris volutpat nunc dui, quis condimentum dolor efficitur et. Phasellus
+                        rhoncus porta nunc eu fermentum. Nullam vitae erat hendrerit, tempor arcu eget, eleifend tortor.
+                    </p>
+                </div>
+                <div class="entity-extra">
+                    <div class="text-uppercase entity-extra-title">Showtime</div>
+                    <div class="entity-showtime">
+                        <div class="showtime-wrap">
+                            <% showtime.start.forEach(start=>{ %>
+                                <div class="showtime-item">
+                                    <a class="btn-time btn" aria-disabled="false" href="/booking?idShowtime=<%= start.id %>&idMovie=<%= showtime.idMovie %>&idCinema=<%= showtime.idCinema %>">
+                                        <%= start.begin %>
+                                    </a>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <% }})})  %>
+           
+    </div>
+    
+</section>

@@ -1,0 +1,42 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Thời gian</th>
+                <th scope="col">Phim</th>
+                <th scope="col">Rạp</th>
+                <th scope="col">Ghế</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% listHistory.forEach( his => { %>
+                <tr>
+                    <td>
+                        <!-- <%= his.date %> -->
+
+                        <%= his.date.getHours() %>:
+                            <%= his.date.getMinutes() %>-
+                                <%= his.date.getUTCDate() %>/
+                                    <%= his.date.getUTCMonth() + 1 %>/
+                                        <%= his.date.getUTCFullYear() %>
+                    </td>
+                    <% listMovie.forEach( movie => { 
+                        if(his.movie === movie.id){ %>
+                        <td>
+                            <%= movie.name %>
+                        </td>
+                        <% }}) %>
+                            <% listCinema.forEach( cinema => { 
+                            if(his.cinema === cinema.id){ %>
+                                <td>
+                                    <%= cinema.name %>
+                                </td>
+                                <% }}) %>
+                                    <td>
+                                        <%= his.seat %>
+                                    </td>
+                </tr>
+                <% } )  %>
+        </tbody>
+    </table>
+</div>

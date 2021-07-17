@@ -1,0 +1,40 @@
+<div class="container">
+    <% if(action === "Movie"){ %>
+        <h1>Thống kê doanh thu theo Phim</h1>
+        <% } else{ %>
+            <h1>Thống kê doanh thu theo Cụm Rạp</h1>
+            <% } %>
+                <p>Từ
+                    <%= tu %> đến
+                        <%= den %>
+                </p>
+                <hr>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <% if(action === "Movie"){ %>
+                                <th scope="col">Tên Phim</th>
+                                <% } else{ %>
+                                    <th scope="col">Tên Cụm Rạp</th>
+                                    <% } %>
+                                        <th scope="col">Số Vé Bán Được</th>
+                                        <th scope="col">Doanh Thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% listStatistic.forEach( statistic => { %>
+                            <tr>
+                                <td>
+                                    <%= statistic.name %>
+                                </td>
+                                <td>
+                                    <%= statistic.ticket %>
+                                </td>
+                                <td>
+                                    <%= statistic.money %>
+                                </td>
+                            </tr>
+                            <% } )  %>
+                    </tbody>
+                </table>
+</div>

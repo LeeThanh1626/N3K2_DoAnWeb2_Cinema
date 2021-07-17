@@ -1,0 +1,64 @@
+<div class="container">
+    <% if(result == 1){ %>
+        <div class="alert alert-success" role="alert">
+            Thêm cụm rạp thành công.
+        </div>
+        <% } else if(result == -1){ %>
+            <div class="alert alert-success" role="alert">
+                Thêm cụm rạp thất bại.
+            </div>
+            <% } else if(result == 2){ %>
+                <div class="alert alert-success" role="alert">
+                    Xóa cụm rạp thành công.
+                </div>
+                <% } else if(result == -2){ %>
+                    <div class="alert alert-success" role="alert">
+                        Xóa cụm rạp thất bại.
+                    </div>
+                    <% } %>
+                        <div class="section-head">
+                            <h2 class="section-title text-uppercase">Quản lý cụm rạp</h2>
+                        </div>
+                        <div class="table-responsive table-purchases">
+                            <table class="table table-hover table-striped margin-bottom-10">
+                                <thead style="background-color: black; color: white;">
+                                    <tr>
+                                        <th>Tên cụm rạp</th>
+                                        <th>Địa chỉ</th>
+                                        <th style="width: 115px;"></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-warning">
+                                        <td colspan="5" align="center">
+                                            <a href="/admin/addCinemas">
+                                                <i style="font-weight: bold; color:white;" class="fa fa-plus-circle">Add new</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% listCinemas.forEach(cinemas => { %>
+                                        <tr>
+                                            <td>
+                                                <%= cinemas.name %>
+                                            </td>
+                                            <td>
+                                                <%= cinemas.address %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/manageCinema?idCinemas=<%= cinemas.id %>">
+                                                    <i class="fa fa-plus-circle">Xem chi tiết</i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/deleteCinemas?idCinemas=<%= cinemas.id %>">
+                                                    <i class="fa fa-plus-circle">Xóa</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+</div>

@@ -1,0 +1,99 @@
+<% if(action === "Movie"){ %>
+    <section class="section-long">
+        <div class="container">
+            <div class="section-head">
+                <h2 class="section-title text-uppercase">Kết quả tìm kiếm theo phim</h2>
+            </div>
+            <% listResult.forEach(movie=>{ %>
+                <article class="movie-line-entity">
+                    <div class="entity-poster" data-role="hover-wrap">
+                        <div class="embed-responsive embed-responsive-poster">
+                            <img class="embed-responsive-item" src="/admin/image/<%= movie.id %>" alt="" />
+                        </div>
+                        <!-- <div class="d-over bg-theme-lighted collapse animated faster" data-show-class="fadeIn show" data-hide-class="fadeOut show">
+                            <div class="entity-play">
+                                <a class="action-icon-theme action-icon-bordered rounded-circle" href="https://www.youtube.com/watch?v=q-4n-GISMrs" data-magnific-popup="iframe">
+                                    <span class="icon-content"><i class="fas fa-play"></i></span>
+                                </a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="entity-content">
+                        <h4 class="entity-title">
+                            <a class="content-link" href="/detailMovie?idMovie=<%= movie.id %>">
+                                <%- movie.name; %>
+                        </h4>
+                        <div class="entity-category">
+                            <a class="content-link" href="movies-blocks.html"></a>
+                            <a class="content-link" href="movies-blocks.html"></a>
+                            <%= movie.theloai %>
+                        </div>
+                        <div class="entity-info ">
+                            <div class="info-lines ">
+                                <!-- <div class="info info-short ">
+                                    <span class="text-theme info-icon "><i class="fas fa-star "></i></span>
+                                    <span class="info-text ">8,1</span>
+                                    <span class="info-rest ">/10</span>
+                                </div> -->
+                                <div class="info info-short ">
+                                    <span class="text-theme info-icon "><i class="fas fa-clock "></i></span>
+                                    <span class="info-text "><%= movie.time; %></span>
+                                    <span class="info-rest ">&nbsp;min</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-short entity-text">
+                            <%= movie.content %>
+                        </p>
+                    </div>
+                </article>
+                <% })  %>
+        </div>
+    </section>
+    <% } if(action === "Cinema"){ %>
+        <section class="section-long">
+            <div class="container">
+                <div class="section-head">
+                    <h2 class="section-title text-uppercase">Kết quả tìm kiếm theo rạp</h2>
+                </div>
+                <% listResult.forEach(cinema=>{ %>
+                    <article class="movie-line-entity">
+                        <div class="entity-content">
+                            <h4 class="entity-title">
+                                <a class="content-link" href="/showtime?idCinema=<%= cinema.id %>">
+                                    <%- cinema.name; %>
+                            </h4>
+                            <p class="text-short entity-text">Thuộc cụm rạp
+                                <% listCinemas.forEach(cinemas=>{ 
+                                    if (cinemas.id === cinema.idCinemas){%>
+                                    <%= cinemas.name %>. Địa chỉ:
+                                        <%= cinemas.address %>
+                                            <% }}) %>
+                            </p>
+                        </div>
+                    </article>
+                    <% })  %>
+            </div>
+        </section>
+        <% } if(action === "Cinemas"){ %>
+            <section class="section-long">
+                <div class="container">
+                    <div class="section-head">
+                        <h2 class="section-title text-uppercase">Kết quả tìm kiếm theo cụm rạp</h2>
+                    </div>
+                    <% listResult.forEach(cinemas=>{ %>
+                        <article class="movie-line-entity">
+                            <div class="entity-content">
+                                <h4 class="entity-title">
+                                    <a class="content-link" href="/detailCinemas?idCinemas=<%= cinemas.id %>">
+                                        <%- cinemas.name; %>
+                                </h4>
+                                <p class="text-short entity-text">
+                                    <%= cinemas.address %>
+                                </p>
+                            </div>
+                        </article>
+                        <% })  %>
+                </div>
+            </section>
+            <% } %>
