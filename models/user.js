@@ -95,10 +95,12 @@ User.sendEmail = async function(Email, Code) {
     const info = await transporter.sendMail({
         from: "ltw1.18600232@gmail.com",
         to: Email,
+        replyTo: "ltw1.18600232@gmail.com",
         subject: "Xac nhan tai khoan",
         text: "Nhan vao lien ket de kich hoat tai khoan",
         // html: "<b>https://ltw2-18600232-w3.herokuapp.com/auth/register/confirm?code=" +  Code  + "&id=" + id.id + "</b>"
-        html: "<b>localhost:3000/auth/signup/confirm?code=" + Code + "&id=" + id.id + "</b>"
+        // html: "<b>localhost:3000/auth/signup/confirm?code=" + Code + "&id=" + id.id + "</b>"
+        html: '<a https://ltw2-doan-18600232.herokuapp.com/auth/signup/confirm?code=' + Code + '&id=' + id.id + '">Nhấp vào đây để kích hoạt tài khoản</a>'
             // html: "<b>https://ltw2-18600232-w3.herokuapp.com/auth/register/confirm?code=" + Code + "&id=" + id.id + "</b>"
     });
 }
