@@ -82,21 +82,21 @@ User.Register = async function(email, password, displayName, phoneNumber) {
 }
 
 User.sendEmail = async function(Email, Code) {
-    const nodemailer = require('nodemailer');
-    const transporter = nodemailer.createTransport({
+    const nodemailer = require('nodemailer'),sgTransport = require('nodemailer-sendgrid-transport');
+    const transporter = nodemailer.createTransport(sgTransport({
         host: "smtp.gmail.com",
         port: 587,
-        secure: false,
+        secure: true,
         auth: {
             // user: 'ltw1.18600232@gmail.com',
             // pass: 'abcxyz123~'
             user: 'ltw1.18600174@gmail.com',
             pass: 'Nam31081999.'
         }
-    });
+    }));
     const id = await User.findByEmail(Email);
     const info = await transporter.sendMail({
-        from: "ltw1.18600174@gmail.com",
+        from: "ltw1.18600174@heroku.com",
         to: Email,
         replyTo: "ltw1.18600174@gmail.com",
         subject: "Xac nhan tai khoan",
