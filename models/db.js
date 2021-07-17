@@ -7,5 +7,3 @@ module.exports = new Sequelize(process.env.DATABASE_URL || 'postgres://postgres:
         }
     }
 })
-
-//process.env.DATABASE_URL || 'postgres://postgres:310899@localhost:5432/postgres'
