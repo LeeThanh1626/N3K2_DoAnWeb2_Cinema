@@ -33,7 +33,7 @@ router.get('/signup', function(req, res) {
 router.post('/signup', asyncHandler(async function(req, res) {
     const { email, password, displayName, phoneNumber } = req.body;
     const result = await User.Register(email, password, displayName, phoneNumber);
-    res.redirect('/auth/login?noti=' + result);
+    res.redirect('/auth/login?result=' + result);
 }))
 router.get('/signup/confirm', asyncHandler(async function(req, res) {
     const code = req.query.code;
@@ -48,5 +48,33 @@ router.get('/logout', function(req, res) {
     delete req.session.userId;
     res.redirect('/');
 })
+
+//Quên mật khẩu
+router.get('/forgetPass', function(req, res) {
+    res.render('auth/forgetPass');
+})
+router.post('/forgetPass', asyncHandler(async function(req, res) {
+    const { email } = req.body;
+    const result = await User.forgotPass(email);
+    res.redirect('/auth/login?result=4');
+}))
+router.get('/resetPass/confirmPass', asyncHandler(async function(req, res) {
+    const code = req.query.code;
+    const id = req.query.id;
+    console.log(code + "," + id);
+    await User.confirmPass(code, id);
+    res.render('auth/changePass', { id });
+}))
+router.post('/resetPass/confirmPass', asyncHandler(async function(req, res) {
+    const { password } = req.body;
+    const id = req.query.id;
+
+    const bcrypt = require('bcrypt');
+    const hash = bcrypt.hashSync(password, 10);
+    const pf = await User.findByPk(id);
+    pf.password = hash;
+    await pf.save();
+    res.redirect('/auth/login?result=5');
+}))
 
 module.exports = router;

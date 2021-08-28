@@ -37,4 +37,112 @@
                             <% } )  %>
                     </tbody>
                 </table>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Biểu đồ theo doanh thu</th>
+                            <th>Biểu đồ theo số lượng vé</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <canvas height="300px" width="400px" id="barChartMoney" class="chartjs-chart"></canvas>
+                            </td>
+                            <td>
+                                <canvas height="300px" width="400px" id="barChartTicket" class="chartjs-chart"></canvas>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div data-type="column">
+
+                    <!-- Biểu đồ theo tiền -->
+                    <div style="width: 300px; height: 500px; display:inline-block;" data-type="row">
+                        <!-- <canvas height="320px" width="500px" id="barChartMoney" class="chartjs-chart"></canvas> -->
+                        <script>
+                            var typeMoney = 'pie';
+                            var barChartDataMoney = {
+                                labels: [<% listStatistic.forEach(statistic => {%>
+                                    "<%= statistic.name %>",
+                                    <% }) %>
+                                ],
+                                datasets: [{
+                                    label: 'Tien',
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.6)',
+                                        'rgba(54, 162, 235, 0.6)',
+                                        'rgba(255, 206, 86, 0.6)',
+                                        'rgba(75, 192, 192, 0.6)',
+                                        'rgba(153, 102, 255, 0.6)',
+                                        'rgba(255, 159, 64, 0.6)',
+                                        'rgba(255, 99, 132, 0.6)'
+                                    ],
+                                    borderColor: "rgb(249, 200, 81)",
+                                    borderWidth: 1,
+                                    hoverBackgroundColor: "rgba(249,200,81,0.6)",
+                                    hoverBorderColor: "rgb(249, 200, 81)",
+                                    data: [<% listStatistic.forEach(statistic => {%>
+                                        "<%= statistic.money %>", <% }) %>
+                                    ]
+                                }],
+                            };
+                            let ctxMoney = document.getElementById('barChartMoney').getContext('2d');
+                            let maxPopChartMoney = new Chart(ctxMoney, {
+                                type: typeMoney,
+                                data: barChartDataMoney,
+                                options: {}
+                            });
+                        </script>
+
+
+                        <!-- Biểu đồ theo vé -->
+                        <!-- <canvas data-type="donut" id="barChartTicket" class="chartjs-chart"></canvas> -->
+                        <script>
+                            var typeTicket = 'pie';
+                            var barChartDataTicket = {
+                                labels: [<% listStatistic.forEach(statistic => {%>
+                                    "<%= statistic.name %>",
+                                    <% }) %>
+                                ],
+                                datasets: [{
+                                    label: 'Ve',
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.6)',
+                                        'rgba(54, 162, 235, 0.6)',
+                                        'rgba(255, 206, 86, 0.6)',
+                                        'rgba(75, 192, 192, 0.6)',
+                                        'rgba(153, 102, 255, 0.6)',
+                                        'rgba(255, 159, 64, 0.6)',
+                                        'rgba(255, 99, 132, 0.6)'
+                                    ],
+                                    borderColor: "rgb(249, 200, 81)",
+                                    borderWidth: 1,
+                                    hoverBackgroundColor: "rgba(249,200,81,0.6)",
+                                    hoverBorderColor: "rgb(249, 200, 81)",
+                                    data: [<% listStatistic.forEach(statistic => {%>
+                                        "<%= statistic.ticket %>", <% }) %>
+                                    ]
+                                }]
+                            };
+                            let ctxTicket = document.getElementById('barChartTicket').getContext('2d');
+                            let maxPopChartTicket = new Chart(ctxTicket, {
+                                type: typeTicket,
+                                data: barChartDataTicket,
+                                options: {}
+                            });
+                        </script>
+                    </div>
+
+                    <!-- /.box-title -->
+                    <!-- <div id="chart-2" class="js__chart" data-type="column" data-chart="'Year'/'Statistics' | '01'/75 | '02'/42 | '03'/75 | '04'/38 | '05'/19 | '06'/93 | '07'/75 | '08'/75 | '09'/75 | '10'/75 | '11'/75 | '12'/75 "></div> -->
+                    <!-- <canvas id="bar-chartjs-chart" width="770" height="512" style="display: block; width: 616px; height: 410px;"></canvas> -->
+                    <!-- <canvas id="barChart" class="chartjs-chart" height="320px" width="500px"></canvas> -->
+
+                    <!-- <div id="smil-animation-index-chartist-chart"  data-type="column" class="chartist-chart" style="height: 320px"></div> -->
+                    <!-- /#smil-animation-chartist-chart.chartist-chart -->
+
+                </div>
 </div>

@@ -45,9 +45,10 @@ router.post('/profile', asyncHandler(async function(req, res) {
 
 //Chức năng ND03: trang chủ
 router.get('/', asyncHandler(async function(req, res) {
+    const result = req.query.result;
     const listMovie = await Movie.findAll();
     const favourite = await WishList.findAll();
-    res.render('homepage/homepage', { listMovie, favourite });
+    res.render('homepage/homepage', { listMovie, favourite, result });
 }))
 router.get('/detailMovie', asyncHandler(async function(req, res) {
     const idMovie = req.query.idMovie;
@@ -171,6 +172,14 @@ router.get('/showtimeFilm', asyncHandler(async function(req, res) {
     res.render('showtime/showtimeFilm', { list, listCinema, listCinemas });
 }))
 
+//Chi tiết cụm rạp
+router.get('/detailCinemas', asyncHandler(async function(req, res) {
+    const idCine = req.query.idCinemas;
+    const cine = await Cinemas.findByPk(idCine);
+    const list = await Cinema.findByIdCinema(idCine);
+    res.render('detail/detailCinemas', { cine, list });
+}))
+
 //Chức năng ND05: đặt vé
 //Chưa hoàn thành -- Còn đường dẫn đến views
 router.get('/booking', asyncHandler(async function(req, res) {
@@ -186,9 +195,41 @@ router.get('/booking', asyncHandler(async function(req, res) {
     const tempCinema = await Cinema.findById(tempShowtime.idCinema);
     const idCinema = tempCinema.id;
 
+    //Loại bỏ ghế trùng
+    const listBo = [];
+    const listTicket = await Ticket.findAll();
+    const listBooking = await Booking.findAll();
+    listBooking.forEach(booking => {
+        if (booking.idShowTime == idShowtime) {
+            listTicket.forEach(ticket => {
+                if (ticket.idBooking == booking.id) {
+                    listBo.push(ticket.idSeat);
+                }
+            })
+        }
+    })
+
     const ngang = tempCinema.horizontalSize;
     const doc = tempCinema.verticalSize;
-    res.render('user/seat', { ngang, doc, idMovie, idCinema, idShowtime });
+    res.render('user/seat', { ngang, doc, idMovie, idCinema, idShowtime, listBo });
+}))
+
+//Send mail buy ticket
+router.post('/sendMailBuyTicket', asyncHandler(async function(req, res) {
+    const idUser = req.session.userId; //iduser trong session
+    const tempUser = await User.findByPk(idUser);
+    const seat = req.query.seat; //get mảng mã ghế muốn đặt
+    const total = req.query.total;
+    const idShowtime = req.query.idShowtime; //get
+    const tempShowtime = await Showtime.findById(idShowtime);
+    const idMovie = tempShowtime.idMovie;
+    const idCinema = tempShowtime.idCinema;
+    const checkoutMovie = await Movie.findByPk(idMovie);
+    const checkoutCinema = await Cinema.findByPk(idCinema);
+
+    const temp = await User.sendEmailBuyTicket(tempUser.email, seat, checkoutCinema.name, checkoutMovie.name, tempShowtime.start, total);
+
+    res.redirect('/?result=' + temp);
 }))
 
 router.post('/booking', asyncHandler(async function(req, res) {
@@ -228,7 +269,7 @@ router.post('/booking', asyncHandler(async function(req, res) {
         await Ticket.addTicket(listBooking[all - 1].id, u, money);
     }
 
-    res.render('user/Checkout', { totalMoney, seat, checkoutCinema, checkoutMovie });
+    res.render('user/Checkout', { totalMoney, seat, checkoutCinema, checkoutMovie, idShowtime });
     // res.redirect('/history');
     // res.redirect('/user/his?noti=bookingSuccess', { noti });
 }))

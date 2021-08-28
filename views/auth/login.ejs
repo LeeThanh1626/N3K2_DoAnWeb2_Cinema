@@ -1,25 +1,38 @@
-<div class="container">
-    <% if(result == 1){ %>
+<!-- <div class="container"> -->
+<% if(result == 1){ %>
+    <div class="alert alert-success" role="alert">
+        Đăng ký thành công, check email đã đăng ký để kích hoạt tài khoản.
+    </div>
+    <% } else if(result == -1){ %>
         <div class="alert alert-success" role="alert">
-            Đăng ký thành công, check email đã đăng ký để kích hoạt tài khoản.
+            Đăng ký thất bại.
         </div>
-        <% } else if(result == -1){ %>
+        <% } else if(result == 4){ %>
             <div class="alert alert-success" role="alert">
-                Đăng ký thất bại.
+                Kiểm tra email để đặt lại mật khẩu.
             </div>
-            <% }%>
-                <form method="post">
-                    <div class="container">
-                        <div class="mb-3">
-                            <label for="email" class="form-label"><b>Email</b></label>
-                            <input type="text" class="form-control" placeholder="Nhập email" name="email" required>
+            <%  } else if(result == 5){ %>
+                <div class="alert alert-success" role="alert">
+                    Thay đổi mật khẩu thành công.
+                </div>
+                <% }%>
+                    <form method="post">
+                        <div class="container">
+                            <div class="mb-3">
+                                <label for="email" class="form-label"><b>Email</b></label>
+                                <input type="text" class="form-control" placeholder="Nhập email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label"><b>Mật Khẩu</b></label>
+                                <input type="password" class="form-control" placeholder=" Nhập mật Khẩu" name="password" required>
+                            </div>
+                            <div>
+                                <a href="/auth/forgetPass">
+                                    <i style="font-weight: bold; color:blue;">Quên mật khẩu</i>
+                                </a>
+                            </div>
+                            <div>
+                                <button type="submit">Đăng Nhập</button>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label"><b>Mật Khẩu</b></label>
-                            <input type="password" class="form-control" placeholder=" Nhập mật Khẩu" name="password" required>
-                        </div>
-                        <div>
-                            <button type="submit">Đăng Nhập</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>

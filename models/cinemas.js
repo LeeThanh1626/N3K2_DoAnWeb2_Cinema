@@ -21,6 +21,10 @@ const Cinemas = db.define('Cinemas', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    image: {
+        type: DataTypes.BLOB,
+        allowNull: false
+    }
 });
 
 //code function here

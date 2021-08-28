@@ -146,6 +146,16 @@ router.get('/image/:id', asyncHandler(async function(req, res) {
     }
 }))
 
+//Hiển thị ảnh cụm rạp
+router.get('/cinemas/:id', asyncHandler(async function(req, res) {
+    const cine = await Cinemas.findByPk(req.params.id);
+    if (!cine || !cine.image) {
+        res.status(404).send('File not found');
+    } else {
+        res.header('Content-Type', 'image/jpeg').send(cine.image);
+    }
+}))
+
 //Trang thêm xuất chiếu
 router.get('/addShowtime', asyncHandler(async function(req, res) {
     const listMovie = await Movie.findAll();
@@ -187,17 +197,18 @@ router.post('/statistic', asyncHandler(async function(req, res) {
     const listMovie = await Movie.findAll();
     const listCinema = await Cinema.findAll();
     const listCinemas = await Cinemas.findAll();
-
-    //Xử lý doanh thu phim
-    listBooking.forEach(tempBooking => {
-        const dataDate = tempBooking.createdAt;
+    listBooking[i]
+        //Xử lý doanh thu phim
+    for (var i = 0; i < listBooking.length; i++) {
+        const dataDate = listBooking[i].createdAt;
         const date = new Date(dataDate);
+        const listTicket = await Ticket.findByIdBooking(listBooking[i].id);
         //Kiểm tra ngày đặt chỗ có trong khoảng thời gian from ... to không
         // if (dataDate.getDate() === a.getDate() && dataDate.getMonth() === a.getMonth() && dataDate.getFullYear() === a.getFullYear() && dataDate.getDate() === b.getDate() && dataDate.getMonth() === b.getMonth() && dataDate.getFullYear() === b.getFullYear()) {
         if (((date.getTime() - a.getTime()) / 1000 >= 0) && ((b.getTime() - date.getTime()) / 1000 >= 0)) {
             listShowtime.forEach(tempShowtime => {
                 //Kiểm tra đặt chỗ của xuất chiếu nào
-                if (tempBooking.idShowTime === tempShowtime.id) {
+                if (listBooking[i].idShowTime === tempShowtime.id) {
                     //Phim
                     if (action === "Movie") { //Doanh thu theo phim
                         listMovie.forEach(tempMovie => {
@@ -208,15 +219,15 @@ router.post('/statistic', asyncHandler(async function(req, res) {
                                 if (exits) { //Nếu có tồn tại 
                                     listStatistic.forEach(u => {
                                         if (u.name === tempMovie.name) { //Cập nhật lại số vé và doanh thu
-                                            u.ticket = u.ticket + 1;
-                                            u.money = u.money + tempBooking.totalMoney;
+                                            u.ticket = u.ticket + listTicket.length;
+                                            u.money = u.money + listBooking[i].totalMoney;
                                         }
                                     })
                                 } else { //Nếu không tồn tại
                                     const temp = { //Tạo đối tượng mới 
                                         name: tempMovie.name, //Lưu tên phim
-                                        ticket: 1, //Lưu số vé
-                                        money: tempBooking.totalMoney, //Lưu tổng doanh thu
+                                        ticket: listTicket.length, //Lưu số vé
+                                        money: listBooking[i].totalMoney, //Lưu tổng doanh thu
                                     }
                                     listStatistic.push(temp); //Thêm vào mảng
                                 }
@@ -238,15 +249,15 @@ router.post('/statistic', asyncHandler(async function(req, res) {
                                         if (exits) { //Nếu có tồn tại 
                                             listStatistic.forEach(u => {
                                                 if (u.name === tempCinemas.name) { //Cập nhật lại số vé và doanh thu
-                                                    u.ticket = u.ticket + 1;
-                                                    u.money = u.money + tempBooking.totalMoney;
+                                                    u.ticket = u.ticket + listTicket.length;
+                                                    u.money = u.money + listBooking[i].totalMoney;
                                                 }
                                             })
                                         } else { //Nếu không tồn tại
                                             const temp = { //Tạo đối tượng mới 
                                                 name: tempCinemas.name, //Lưu tên cụm rạp
-                                                ticket: 1, //Lưu số vé
-                                                money: tempBooking.totalMoney, //Lưu tổng doanh thu
+                                                ticket: listTicket.length, //Lưu số vé
+                                                money: listBooking[i].totalMoney, //Lưu tổng doanh thu
                                             }
                                             listStatistic.push(temp); //Thêm vào mảng
                                         }
@@ -258,7 +269,7 @@ router.post('/statistic', asyncHandler(async function(req, res) {
                 }
             })
         }
-    })
+    }
     const tu = a.getDate() + '-' + (a.getMonth() + 1) + '-' + a.getFullYear();
     const den = b.getDate() + '-' + (b.getMonth() + 1) + '-' + b.getFullYear();
     res.render('admin/statistic/resultStatistic', { listStatistic, tu, den, action });

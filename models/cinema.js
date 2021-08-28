@@ -37,6 +37,18 @@ Cinema.findById = async function(id) {
     return Cinema.findByPk(id);
 }
 
+//Find Cinema By Id Cinemas
+Cinema.findByIdCinema = async function(id) {
+    const listCinema = await Cinema.findAll();
+    const list = [];
+    listCinema.forEach(Cinema => {
+        if (Cinema.idCinemas == id) {
+            list.push(Cinema);
+        }
+    });
+    return list;
+}
+
 //thêm rạp
 Cinema.addCinema = async function(name, idCinemas, horizontalSize, verticalSize) {
     const listCinema = await Cinema.findAll();

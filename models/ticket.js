@@ -37,5 +37,15 @@ Ticket.addTicket = async function(idBooking, idSeat, money) {
         money: money,
     });
 };
+Ticket.findByIdBooking = async function(idBooking) {
+    const listTicket = await Ticket.findAll();
+    const listResult = [];
+    listTicket.forEach(ticket => {
+        if (ticket.idBooking == idBooking) {
+            listResult.push(ticket);
+        }
+    })
+    return listResult;
+}
 
 module.exports = Ticket;
